@@ -1,0 +1,28 @@
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>${title}</title>
+        <link type="text/css" rel="stylesheet" href="css/defaultStyle.css" />
+    </head>
+    <body>
+        <div id="container">
+            <div id="wrapper">
+                <div id="header">
+
+                <div id="logo">
+                    <img src="images/logo_1.png" alt="" />
+                </div>
+
+                
+
+                <div id="address">
+                    <h1>100 Downtown<br>Big City<br>3000<br>email:info@dailybanking.dk<br>Tel.(+45)12345678<br>fax.(+45)22334455</h1>
+                </div>
+                <div id="navigation">${navigation}</div>
+
+                </div>
