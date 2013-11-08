@@ -1,0 +1,29 @@
+
+package commands;
+
+import java.util.Collection;
+import javax.servlet.http.HttpServletRequest;
+import security.SecurityRole;
+import servlets.Factory;
+import shared.Customer;
+
+/**
+ *
+ * @author Aaron, Kris, Lars, Timea, @08/11/2013
+ */
+public class ListAllBanksCustomersCommand extends TargetCommand {
+
+    public ListAllBanksCustomersCommand(String target, String title, SecurityRole role) {
+        super(target, title, role);
+    }
+
+    
+
+    @Override
+    public String execute(HttpServletRequest request) {
+        Collection<Customer> custs = Factory.getBankController().getCustomers();
+        request.setAttribute("customers", custs);
+        return super.execute(request); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+}

@@ -24,7 +24,6 @@ public class TargetCommand implements Command {
     public String execute(HttpServletRequest request) {
         request.setAttribute("title", title);
         request.setAttribute("navigation", setNav());
-        
         return target;
     }
     
