@@ -1,0 +1,64 @@
+DROP TABLE customer_details;
+DROP TABLE account_transaction;
+DROP TABLE account;
+DROP TABLE customer;
+
+CREATE TABLE customer (
+  id Integer primary key
+        GENERATED ALWAYS AS IDENTITY
+        (START WITH 1000, INCREMENT BY 1),
+  cname varchar(80) default NULL
+);
+
+INSERT INTO customer (cname) VALUES ('Aaron Morley');
+INSERT INTO customer (cname) VALUES ('Lars Sørensen');
+INSERT INTO customer (cname) VALUES ('Timea Kiss');
+INSERT INTO customer (cname) VALUES ('Kris Maini');
+
+CREATE TABLE customer_details (
+  id Integer,
+  address varchar(100) default NULL,
+  zip Integer default NULL,
+  region varchar(50) default NULL,
+  email varchar(100) default NULL,
+  phone Integer default NULL,
+  FOREIGN KEY (id) references customer
+);
+
+INSERT INTO customer_details (id,address,zip,region,email,phone) VALUES (1000,'street0',1111,'copenhagen','aaron@morley.com',12345678);
+INSERT INTO customer_details (id,address,zip,region,email,phone) VALUES (1001,'street1',1111,'copenhagen','lar@sorensen.com',92345678);
+INSERT INTO customer_details (id,address,zip,region,email,phone) VALUES (1002,'street2',1111,'copenhagen','timea@kiss.com',02345678);
+INSERT INTO customer_details (id,address,zip,region,email,phone) VALUES (1003,'street3',1111,'copenhagen','kris@maini.com',22345678);
+
+CREATE TABLE account (
+  account_id Integer primary key
+        GENERATED ALWAYS AS IDENTITY
+        (START WITH 2000, INCREMENT BY 1),
+  owner Integer,
+  account_type varchar(30) default NULL,
+  balance double,
+  FOREIGN KEY (owner) references customer
+);
+
+INSERT INTO account (owner,account_type,balance) VALUES (1000,'Savings',123.00);
+INSERT INTO account (owner,account_type,balance) VALUES (1000,'Deposit',1340.00);
+INSERT INTO account (owner,account_type,balance) VALUES (1001,'Savings',3412.00);
+INSERT INTO account (owner,account_type,balance) VALUES (1001,'Moneymarket',5499.00);
+INSERT INTO account (owner,account_type,balance) VALUES (1002,'Savings',1234.00);
+INSERT INTO account (owner,account_type,balance) VALUES (1003,'Savings',3900.00);
+INSERT INTO account (owner,account_type,balance) VALUES (1003,'Deposit',124.00);
+
+CREATE TABLE account_transaction (
+  account_id Integer,
+  transaction_id Integer primary key
+        GENERATED ALWAYS AS IDENTITY
+        (START WITH 3000, INCREMENT BY 1),
+  amount double,
+  transaction_time date,
+  FOREIGN KEY (account_id) REFERENCES account
+);
+
+INSERT INTO account_transaction (account_id,amount,transaction_time) VALUES (2000,100.00,'2013-01-01');
+INSERT INTO account_transaction (account_id,amount,transaction_time) VALUES (2001,200.00,'2013-02-02');
+INSERT INTO account_transaction (account_id,amount,transaction_time) VALUES (2002,300.00,'2013-03-03');
+INSERT INTO account_transaction (account_id,amount,transaction_time) VALUES (2003,400.00,'2013-04-04');
