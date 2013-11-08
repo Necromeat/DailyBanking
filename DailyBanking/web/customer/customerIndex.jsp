@@ -10,6 +10,8 @@
     
         <h1>Customer Index</h1>
         
+    <a href="Controller?command=bankTellerIndex">BankTeller Index</a>
+        
     </div>
 
 <%@include file="../WEB-INF/jspf/footer.jspf" %>

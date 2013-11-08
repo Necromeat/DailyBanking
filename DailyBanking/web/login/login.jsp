@@ -14,7 +14,8 @@
             <p>Password: <input type="password" name="password"/></p>
             <p><input type="submit" value="login"/></p>
             <p>${error}</p>
-            <p>username = aaron : password = aaron</p>
+            <p>username = Customer : password = test</p>
+            <p>username = BankTeller : password = test</p>
 </form>
 </div>
     
