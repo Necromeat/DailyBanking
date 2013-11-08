@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import commands.Command;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,16 +17,19 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "Controller", urlPatterns = {"/Controller"})
 public class Controller extends HttpServlet {
 
+    private int PORT_NON_SSL;
+    private int PORT_SSL;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-
         String commandString = request.getParameter("command");
-
         request.setAttribute("title", "Main Page");
+
         Command command = Factory.getInstance().getCommand(commandString, request);
         String path = command.execute(request);
+
+        
 
         RequestDispatcher requestDispatcher =
                 request.getRequestDispatcher(path);

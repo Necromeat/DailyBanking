@@ -25,7 +25,7 @@
             <url-pattern>/bankTeller/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <description/>
+            <description>BankTeller</description>
             <role-name>Customers</role-name>
             <role-name>BankTellers</role-name>
         </auth-constraint>

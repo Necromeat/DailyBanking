@@ -11,6 +11,7 @@
         <h1>Customer Index</h1>
         
     <a href="Controller?command=bankTellerIndex">BankTeller Index</a>
+    <a href="Controller?command=logout">Logout</a>
         
     </div>
 

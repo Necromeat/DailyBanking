@@ -23,7 +23,7 @@ public class Factory {
         commands.put("main", new TargetCommand("/all/main.jsp", "Main Page",SecurityRole.All));
 
         //login
-        commands.put("showLogin", new TargetCommand("/login/login.jsp","Login Page",SecurityRole.All));
+        commands.put("showLogin", new ShowLoginCommand("/login/login.jsp","Login Page",SecurityRole.All));
         
         Map<SecurityRole,String> rolePages = new HashMap<>();
         rolePages.put(SecurityRole.Customers, "/customer/customerIndex.jsp");
@@ -31,8 +31,9 @@ public class Factory {
         
         commands.put("login", new LoginCommand(rolePages,"/login/login.jsp"));
         
+        //logout
+        commands.put("logout", new LogoutCommand("/all/main.jsp","Main Page", SecurityRole.All));
         
-
         //customer
         commands.put("customerIndex", new CustomerIndexCommand("/customer/customerIndex.jsp", "Customer Index",SecurityRole.Customers));
 
@@ -52,11 +53,25 @@ public class Factory {
         return null; //need to add controller here!!!!!!!1
     }
 
-    public Command getCommand(String cmdStr, HttpServletRequest res) {
+    public Command getCommand(String cmdStr, HttpServletRequest request) {
         if (cmdStr == null) {
-            cmdStr = isMobileDevice(res) ? "mobileMain" : "main";
+            cmdStr = isMobileDevice(request) ? "mobileMain" : "main";
         }
-        return commands.get(cmdStr);
+//        return commands.get(cmdStr);
+     Command cmd = commands.get(cmdStr);
+
+    //This is the most important place in terms of security
+    //If you fail here your security is broken
+    if (cmd instanceof TargetCommand) {
+      SecurityRole requiredRole = ((TargetCommand) cmd).getRole();
+      if (requiredRole != SecurityRole.All
+              && !request.isUserInRole(requiredRole.toString())) {
+        {
+          throw new SecurityException("You don't have the necessary rights for this operation");
+        }
+      }
+    }
+    return cmd;
     }
 
     public boolean isMobileDevice(HttpServletRequest res) {
