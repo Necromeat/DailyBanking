@@ -37,6 +37,15 @@ public class LoginCommand implements Command {
             for (SecurityRole role : roleToTarget.keySet()) {
                 if (request.isUserInRole(role.toString())) {
                     nextPage = roleToTarget.get(role);
+                    String curRole = ""+role;
+                    if(curRole.equals("Customers")){
+                        request.setAttribute("title", "Customer Menu");
+                        request.setAttribute("navigation", "<a id=\"activetab\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>");
+                    }
+                    if(curRole.equals("BankTellers")){
+                        request.setAttribute("title", "BankTellers Menu");
+                        request.setAttribute("navigation", "<a id=\"activetab\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>");
+                    }
                     break;
                 }
             }

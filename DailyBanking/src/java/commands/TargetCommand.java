@@ -23,7 +23,8 @@ public class TargetCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         request.setAttribute("title", title);
-        request.setAttribute("navigation", nav);
+        request.setAttribute("navigation", setNav());
+        
         return target;
     }
     
@@ -31,6 +32,16 @@ public class TargetCommand implements Command {
         return role;
     }
 
+    public String setNav(){
+        if(title.equals("Main Page")){
+        return "<a id=\"activetab\">Main Page</a>";
+        }
+         if(title.equals("Login Page")){
+        return "<a id=\"activetab\">Login</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+        }
+         return null;
+    }
+    
     
     
     

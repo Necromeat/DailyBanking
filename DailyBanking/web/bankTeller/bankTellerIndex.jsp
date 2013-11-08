@@ -7,11 +7,10 @@
 <%@include file="../WEB-INF/jspf/header.jspf"%>
 
 <div id="main">
-    
-        <h1>BankTeller Index</h1>
-        
-        <a href="Controller?command=customerIndex">Customer Index</a>
-        
-    </div>
+    <p id="username">${username} is currently logged in</p>
+
+    <a href="Controller?command=customerIndex">Customer Index</a>
+
+</div>
 
 <%@include file="../WEB-INF/jspf/footer.jspf" %>
