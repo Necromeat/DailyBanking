@@ -12,6 +12,7 @@ public class TargetCommand implements Command {
     private final String target;
     private final String title;
     private final SecurityRole role;
+    private String nav;
 
     public TargetCommand(String target, String title, SecurityRole role) {
         this.target = target;
@@ -22,13 +23,16 @@ public class TargetCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         request.setAttribute("title", title);
+        request.setAttribute("navigation", nav);
         return target;
     }
     
     public SecurityRole getRole(){
         return role;
     }
+
     
     
     
+
 }

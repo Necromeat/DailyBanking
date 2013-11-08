@@ -23,6 +23,7 @@
             <web-resource-name>BankTellers</web-resource-name>
             <description/>
             <url-pattern>/bankTeller/*</url-pattern>
+            <url-pattern>/customer/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description>BankTeller</description>
