@@ -17,6 +17,19 @@
             <role-name>Customers</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>BankTeller</display-name>
+        <web-resource-collection>
+            <web-resource-name>BankTellers</web-resource-name>
+            <description/>
+            <url-pattern>/bankTeller/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Customers</role-name>
+            <role-name>BankTellers</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>BASIC</auth-method>
     </login-config>

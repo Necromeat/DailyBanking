@@ -9,7 +9,7 @@
 <div id="loginpanel">
     <h1>Login:</h1><br>
 <form action="Controller">
-            <input type="hidden" name="command" value="login_command"/>
+            <input type="hidden" name="command" value="login"/>
             <p>Username: <input type="text" name="username"/></p>
             <p>Password: <input type="password" name="password"/></p>
             <p><input type="submit" value="login"/></p>
