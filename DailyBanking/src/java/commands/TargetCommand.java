@@ -45,7 +45,7 @@ public class TargetCommand implements Command {
                 nav = "<a id=\"activetab\">Login</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
             case "Add Customer":
-                nav = "<a href=\"Controller?command=bankTellerIndex&usename="+username+"\">Menu</a>\n <a href=\"Controller?command=listCustomers\">Customer List</a>\n <a id=\"activetab\">Add Customer</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                nav = "<a href=\"Controller?command=bankTellerIndex&username="+username+"\">Menu</a>\n <a href=\"Controller?command=listCustomers\">Customer List</a>\n <a id=\"activetab\">Add Customer</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
             case "BankTeller Index":
                 nav = "<a id=\"activetab\">Menu</a>\n <a href=\"Controller?lastName=&firstName=&email=&command=addCustomer\">Add Customer</a>\n <a href=\"Controller?command=listCustomers\">Customers List</a>\n <a href=\"Controller?command=listAccounts\">Accounts List</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
