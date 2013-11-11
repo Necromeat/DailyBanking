@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import commands.Command;
 import commands.LogoutCommand;
 import commands.ShowLoginCommand;
-import javax.servlet.RequestDispatcher;
 
 /**
  *
