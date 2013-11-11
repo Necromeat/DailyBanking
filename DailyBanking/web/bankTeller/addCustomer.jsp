@@ -11,6 +11,7 @@
             });
 </script>
 <div id="main">
+    <p id="username">${username} is currently logged in</p>
 
 <div id="addcustpanel">
     <form action="Controller" id="addCustForm">

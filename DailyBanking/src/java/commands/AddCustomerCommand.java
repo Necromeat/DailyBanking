@@ -19,6 +19,8 @@ public class AddCustomerCommand extends TargetCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
+        
+        
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
