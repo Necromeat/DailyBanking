@@ -8,8 +8,8 @@
 
 <div id="main">
     <p id="username">${username} is currently logged in</p>
-        
-        
+        <%-- For now just a test case where custid=1001 --%>
+    <a href="Controller?custid=1001&username=${username}&command=customerViewDetails">Your Bank Profile</a>
         
     </div>
 

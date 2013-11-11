@@ -15,7 +15,7 @@
     
 <div id="newspanel">
 <h1>News:</h1><br>
-<h2>The web site is currently under maintenance so things may not work as desired. Thank you for your patients</h2>     
+<h2>The web site is currently under maintenance so things may not work as desired. Thank you for your patience</h2>     
 </div>
    
 </div>

@@ -34,7 +34,10 @@ public class Factory {
         
         //customer
         commands.put("customerIndex", new CustomerIndexCommand("/customer/customerIndex.jsp", "Customer Index",SecurityRole.Customers));
-
+        commands.put("customerViewDetails", new ViewCustomerCommand("/customer/customerViewDetails.jsp","Your Details",SecurityRole.Customers));
+        commands.put("customerViewAccount", new ViewAccountCommand("/customer/customerViewAccount.jsp","Account Details",SecurityRole.Customers));
+        
+        
         //bankTeller
         commands.put("bankTellerIndex", new BankTellerIndexCommand("/bankTeller/bankTellerIndex.jsp", "BankTeller Index",SecurityRole.BankTellers));
         commands.put("addCustomer",new AddCustomerCommand("/bankTeller/addCustomer.jsp","Add Customer",SecurityRole.BankTellers));
