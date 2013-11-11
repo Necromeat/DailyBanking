@@ -50,6 +50,9 @@ public class TargetCommand implements Command {
             case "BankTeller Index":
                 nav = "<a id=\"activetab\">Menu</a>\n <a href=\"Controller?lastName=&firstName=&email=&command=addCustomer\">Add Customer</a>\n <a href=\"Controller?command=listCustomers\">Customers List</a>\n <a href=\"Controller?command=listAccounts\">Accounts List</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
+                case "Customer Index":
+                nav = "<a id=\"activetab\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                break;
         }
         return nav;
     }

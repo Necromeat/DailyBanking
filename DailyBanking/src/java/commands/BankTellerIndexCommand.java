@@ -16,7 +16,6 @@ public class BankTellerIndexCommand extends TargetCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        
         return super.execute(request);
     }
     

@@ -38,11 +38,11 @@ public class Factory {
         //bankTeller
         commands.put("bankTellerIndex", new BankTellerIndexCommand("/bankTeller/bankTellerIndex.jsp", "BankTeller Index",SecurityRole.BankTellers));
         commands.put("addCustomer",new AddCustomerCommand("/bankTeller/addCustomer.jsp","Add Customer",SecurityRole.BankTellers));
-        commands.put("listCustomers", new ListAllBankCustomersCommand("/allowed/BankTeller/listCustomers.jsp","Customers List",SecurityRole.BankTellers));        
-        commands.put("listAccounts", new ListAllBankAccountsCommand("/allowed/BankTeller/listAccounts.jsp","Accounts List",SecurityRole.BankTellers));           
-        commands.put("editCustomer", new EditCustomerCommand("/allowed/BankTeller/editCustomer.jsp", "Edit Customer",SecurityRole.BankTellers));     
-        commands.put("comitEditCustomer", new CommitEditCustomerCommand("/allowed/BankTeller/editCustomer.jsp", "Edit Customer",SecurityRole.BankTellers));
-        commands.put("createAccount", new AddAccountCommand("/allowed/BankTeller/addAccount.jsp","Create Account",SecurityRole.BankTellers));
+        commands.put("listCustomers", new ListAllBankCustomersCommand("/bankTeller/listCustomers.jsp","Customers List",SecurityRole.BankTellers));        
+        commands.put("listAccounts", new ListAllBankAccountsCommand("/bankTeller/listAccounts.jsp","Accounts List",SecurityRole.BankTellers));           
+        commands.put("editCustomer", new EditCustomerCommand("/bankTeller/editCustomer.jsp", "Edit Customer",SecurityRole.BankTellers));     
+        commands.put("comitEditCustomer", new CommitEditCustomerCommand("/bankTeller/editCustomer.jsp", "Edit Customer",SecurityRole.BankTellers));
+        commands.put("createAccount", new AddAccountCommand("/bankTeller/addAccount.jsp","Create Account",SecurityRole.BankTellers));
 
         
         //all mobile
