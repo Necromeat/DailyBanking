@@ -6,6 +6,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.8/jquery.validate.min.js"></script>
+        <script src = "http://code.jquery.com/jquery-1.9.1.min.js" ></script>
+        <script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
         <title>${title}</title>
         <link type="text/css" rel="stylesheet" href="css/defaultStyle.css" />
     </head>
