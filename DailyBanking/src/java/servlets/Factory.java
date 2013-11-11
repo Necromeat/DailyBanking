@@ -24,11 +24,9 @@ public class Factory {
 
         //login
         commands.put("showLogin", new ShowLoginCommand("/login/login.jsp","Login Page",SecurityRole.All));
-        
         Map<SecurityRole,String> rolePages = new HashMap<>();
         rolePages.put(SecurityRole.Customers, "/customer/customerIndex.jsp");
         rolePages.put(SecurityRole.BankTellers, "/bankTeller/bankTellerIndex.jsp");
-        
         commands.put("login", new LoginCommand(rolePages,"/login/login.jsp"));
         
         //logout
