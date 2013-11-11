@@ -29,8 +29,6 @@ public class Controller extends HttpServlet {
         Command command = Factory.getInstance().getCommand(commandString, request);
         String path = command.execute(request);
 
-        
-
         RequestDispatcher requestDispatcher =
                 request.getRequestDispatcher(path);
         requestDispatcher.forward(request, response);

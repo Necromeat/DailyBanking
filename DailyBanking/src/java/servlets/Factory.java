@@ -39,7 +39,14 @@ public class Factory {
 
         //bankTeller
         commands.put("bankTellerIndex", new BankTellerIndexCommand("/bankTeller/bankTellerIndex.jsp", "BankTeller Index",SecurityRole.BankTellers));
+        commands.put("addCustomer",new AddCustomerCommand("/bankTeller/addCustomer.jsp","Add Customer",SecurityRole.BankTellers));
+        commands.put("listCustomers", new ListAllBankCustomersCommand("/allowed/BankTeller/listCustomers.jsp","Customers List",SecurityRole.BankTellers));        
+        commands.put("listAccounts", new ListAllBankAccountsCommand("/allowed/BankTeller/listAccounts.jsp","Accounts List",SecurityRole.BankTellers));           
+        commands.put("editCustomer", new EditCustomerCommand("/allowed/BankTeller/editCustomer.jsp", "Edit Customer",SecurityRole.BankTellers));     
+        commands.put("comitEditCustomer", new CommitEditCustomerCommand("/allowed/BankTeller/editCustomer.jsp", "Edit Customer",SecurityRole.BankTellers));
+        commands.put("createAccount", new AddAccountCommand("/allowed/BankTeller/addAccount.jsp","Create Account",SecurityRole.BankTellers));
 
+        
         //all mobile
         commands.put("mobileMain", new TargetCommand("/all/mobile/mobileMain.jsp", "Main Page",SecurityRole.All));
         commands.put("mobileLogin", new TargetCommand("/login/mobile/mobileLogin.jsp", "loginMobile",SecurityRole.All));
@@ -50,7 +57,7 @@ public class Factory {
     }
 
     public static BankDataController getBankController() {
-        return null; //need to add controller here!!!!!!!1
+        return DummyBankController.getInstance(); 
     }
 
     public Command getCommand(String cmdStr, HttpServletRequest request) {

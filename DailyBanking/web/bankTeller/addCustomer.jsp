@@ -13,15 +13,15 @@
 <div id="main">
 
 <div id="addcustpanel">
-    <form action='Controller'>
+    <form action="Controller" id="addCustForm">
         <label>First Name:</label><br>
-        <input type="text" name="firstName" id="firstName"><br>
+        <input type="text" name="firstName" id="firstName" class="required"><br>
         <label>Last Name:</label><br>
-        <input type="text" name="lastName" id="lastName"><br>
+        <input type="text" name="lastName" id="lastName" class="required"><br>
         <label>Email:</label><br>
-        <input type="text" name="email" id="email"><br>
+        <input type="email" name="email" id="email" class="required email"><br>
         <label>Password:</label><br>
-        <input type="password" name="password" id="password"><br>
+        <input type="password" name="password" id="password" class="required"><br>
         <button name="submit">Submit</button>
         <input type="hidden" name="command" value="addCustomer">
     </form>

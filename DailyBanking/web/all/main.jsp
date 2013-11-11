@@ -17,8 +17,7 @@
 <h1>News:</h1><br>
 <h2>The web site is currently under maintenance so things may not work as desired. Thank you for your patients</h2>     
 </div>
-    <a href="Controller?command=customerIndex">Customer Index</a>
-    <a href="Controller?command=bankTellerIndex">BankTeller Index</a>
+   
 </div>
 
 <%@include file="../WEB-INF/jspf/footer.jspf" %>
