@@ -30,7 +30,7 @@ public class LoginCommand implements Command {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         Customer cust = Factory.getBankController().getCustomerByEmail(username);
-//        request.setAttribute("username", username);
+        request.setAttribute("userid", cust.getCustomerId());
         request.setAttribute("username", cust.getFirstName()+" "+cust.getLastName());
         
         String nextPage = loginFailed;
