@@ -9,7 +9,7 @@
 <div id="main">
     <p id="username">${username} is currently logged in</p>
 
-    <a href="Controller?command=customerIndex">Customer Index</a>
+    
 
 </div>
 

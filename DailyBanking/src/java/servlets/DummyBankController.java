@@ -20,7 +20,7 @@ public class DummyBankController implements BankDataController {
 
     private DummyBankController() {
 
-        Customer cust = new Customer("Donald", "Duck", "donald@duck.com");
+        Customer cust = new Customer("Donald", "Duck", "test@gmail.com");
         Account account1 = new Account("Basic Account", 0);
         cust.addAccount(account1);
         account1.createTransaction(20000, "Salary");
@@ -42,6 +42,9 @@ public class DummyBankController implements BankDataController {
         customers.put(cust.getCustomerId(), cust);
         accounts.put(account1.getAccountId(), account1);
         
+        cust = new Customer("MR", "BankMan", "test@dailybank.com");
+        customers.put(cust.getCustomerId(), cust);
+        
          newTransfer(1000,5000,5001,50,"blah");
     }
 
@@ -57,6 +60,16 @@ public class DummyBankController implements BankDataController {
     @Override
     public Customer getCustomer(long id) {
         return customers.get(id);
+    }
+    
+    @Override
+    public Customer getCustomerByEmail(String email) {
+        for(long id : customers.keySet() ){
+            if(customers.get(id).getEmail().equals(email)){
+                return customers.get(id);
+            }
+        }
+        return null;
     }
 
     @Override

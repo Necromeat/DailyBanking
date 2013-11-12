@@ -13,8 +13,9 @@ public class TargetCommand implements Command {
     private final String target;
     private final String title;
     private final SecurityRole role;
-    private String username =  null;  //shouldn't both username and id be final and not be instantitated?
-    private long id = 1001;           //THIS IS JUST TO TEST THAT IT WORKS FOR NOW. SHOULD BE SET IN THE COMMAND?
+    private String username =  null;  
+    private long id = 0;
+   
 
     public TargetCommand(String target, String title, SecurityRole role) {
         this.target = target;

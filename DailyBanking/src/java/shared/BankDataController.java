@@ -11,6 +11,7 @@ public interface BankDataController {
     
     void addCustomer(Customer customer);
     Customer getCustomer(long id);
+    Customer getCustomerByEmail(String email);
     Account getAccount(long id);
     Collection<Account> getAccounts();
     Collection<Customer> getCustomers();

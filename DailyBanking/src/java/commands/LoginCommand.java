@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
+import servlets.Factory;
+import shared.Customer;
 
 /**
  *
@@ -27,7 +29,9 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        request.setAttribute("username", username);
+        Customer cust = Factory.getBankController().getCustomerByEmail(username);
+//        request.setAttribute("username", username);
+        request.setAttribute("username", cust.getFirstName()+" "+cust.getLastName());
         
         String nextPage = loginFailed;
         try {
@@ -56,5 +60,6 @@ public class LoginCommand implements Command {
         }
         return nextPage;
     }
+    
     
 }
