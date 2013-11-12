@@ -51,7 +51,7 @@ public class Factory {
         commands.put("viewAccount", new ViewAccountCommand("/bankTeller/viewAccount.jsp","Account View",SecurityRole.BankTellers));
         commands.put("accountHistory", new ShowAccountHistoryCommand("/bankTeller/accountHistory.jsp","Account History",SecurityRole.BankTellers));
         commands.put("addTransfer", new CreateTransferCommand("/bankteller/viewAccount.jsp","Account View",SecurityRole.BankTellers));
-        commands.put("commitAddAccount", new AddAccountCommand("/bankTeller/viewCustomer.jsp","View Customer",SecurityRole.BankTellers));
+        commands.put("commitAddAccount", new CommitAddAccountCommand("/bankTeller/viewCustomer.jsp","View Customer",SecurityRole.BankTellers));
 
         
         //all mobile
