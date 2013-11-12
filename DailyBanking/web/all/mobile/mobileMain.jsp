@@ -32,7 +32,7 @@
                 <p>Tel.<a href="tel:(+45)12345678">(+45)12345678</a></p>
                 <p>Sms.<a href="sms:(+45)12345678" data-theme="a" data-role="button">(+45)12345678</a></p>
                 <p>fax.(+45)22334455 </p>
-                <a href="Controller?command=mobileLogin" data-role="button" data-transition='slide'>Login</a>
+                <a href="Controller?command=mobileShowLogin" data-role="button" data-transition='slide'>Login</a>
             </div>
 
             <div data-role="footer" data-position="fixed"> <!-- Add data-position="fixed" to align to button -->

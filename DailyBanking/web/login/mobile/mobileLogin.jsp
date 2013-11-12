@@ -34,11 +34,11 @@
                 </div>
                 <div data-role="fieldcontain" > 
                     <label for="password" class="ui-hidden-accessible">Password</label>
-                    <input type="text" name="password" id="password" value="" 
+                    <input type="password" name="password" id="password" value="" 
                            placeholder="password"/>
                 </div>
                 <input type='submit' value='login'>
-                <input type='hidden' name='command' value='mainauth'>;
+                <input type='hidden' name='command' value='mobileLogin'>;
                 </form>
             </div>
 
