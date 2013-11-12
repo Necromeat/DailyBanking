@@ -20,9 +20,9 @@
     </div>
 
     <div id="basicPanel">
-        <a href="Controller?accountid=${account.accountId}&command=customerAccountHistory">View Transaction's</a>
+        <a href="Controller?accountid=${account.accountId}&username=${username}&userid=${userid}&command=customerAccountHistory">View Transaction's</a>
         
-        <a href="Controller?accountid=${account.accountId}&command=customerCreateTransfer">Make Transfer</a>
+        <a href="Controller?accountid=${account.accountId}&username=${username}&userid=${userid}&command=customerCreateTransfer">Make Transfer</a>
     </div>
     
 </div>
