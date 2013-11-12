@@ -54,18 +54,21 @@ public class TargetCommand implements Command {
 
             //customer
             case "Customer Index":
-                nav = "<a id=\"activetab\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                nav = "<a username="+ username +"&userid=" + userid +"&id=\"activetab\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
             case "Your Details":
-                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "&userid=" + userid + "\">Menu</a>\n<a href=\"Controller?command=customerViewAccounts&username=" + username + "&userid=" + userid + "\"> Accounts</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
 //            case "Account Details":
 //                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
 //                break;
             case "Your Account History":
-                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Back to account</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Back to accounts</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
-
+            case "Your Accounts":
+                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a id=\"lougouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                break;
+                
             //bankTeller
             case "Add Customer":
                 nav = "<a href=\"Controller?command=bankTellerIndex&username=" + username + "\">Menu</a>\n <a href=\"Controller?command=listCustomers\">Customer List</a>\n <a id=\"activetab\">Add Customer</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";

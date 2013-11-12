@@ -10,8 +10,10 @@
     <p id="username">${username} is currently logged in</p>
 
     <div id="basicPanel">
-        <h3>Account Owner:&nbsp${account.owner.firstName}&nbsp${account.owner.lastName}</h3>
-        <a href="Controller?accountid=${account.accountId}&command=viewAccount">Account Details</a> 
+        <h3>Account History for: </h3>
+        <h3>${account.accountType}&nbsp; - Account number: &nbsp;${account.accountId}</h3>
+        <%--<h3>Account Owner:&nbsp${account.owner.firstName}&nbsp${account.owner.lastName}</h3>
+        <a href="Controller?accountid=${account.accountId}&command=viewAccount">Account Details</a>--%> 
     </div>
 
     <div id="basicPanel">
