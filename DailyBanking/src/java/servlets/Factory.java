@@ -60,7 +60,7 @@ public class Factory {
         Map<SecurityRole,String> rolePages2 = new HashMap<>();
         rolePages2.put(SecurityRole.Customers, "/customer/mobile/mobileCustomerIndex.jsp");
         commands.put("mobileLogin", new LoginCommand(rolePages2,"/login/mobile/mobileLogin.jsp"));
-        commands.put("logout", new LogoutCommand("/all/mobile/mobileMain.jsp","Main Page", SecurityRole.All));
+        commands.put("mobileLogout", new LogoutCommand("/all/mobile/mobileMain.jsp","Main Page", SecurityRole.All));
     }
 
     public static Factory getInstance() {
