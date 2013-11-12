@@ -36,7 +36,9 @@ public class LoginCommand implements Command {
         String nextPage = loginFailed;
         try {
             //This performs a programatic login
+            System.out.println("about to log in");
             request.login(username, password);
+            System.out.println("just logged in");
             //Set next page depending on the users role
             for (SecurityRole role : roleToTarget.keySet()) {
                 if (request.isUserInRole(role.toString())) {
@@ -58,6 +60,7 @@ public class LoginCommand implements Command {
             request.setAttribute("navigation","<a id=\"activetab\">Login</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>");
             Logger.getLogger(LoginCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("returning: " + nextPage);  
         return nextPage;
     }
     
