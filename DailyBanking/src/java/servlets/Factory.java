@@ -35,7 +35,7 @@ public class Factory {
         //customer
         commands.put("customerIndex", new CustomerIndexCommand("/customer/customerIndex.jsp", "Customer Index",SecurityRole.Customers));
         commands.put("customerViewDetails", new ViewCustomerCommand("/customer/customerViewDetails.jsp","Your Details",SecurityRole.Customers));
-        commands.put("customerViewAccount", new ViewAccountCommand("/customer/customerViewAccount.jsp","Account Details",SecurityRole.Customers));
+//        commands.put("customerViewAccount", new ViewAccountCommand("/customer/customerViewAccount.jsp","Account Details",SecurityRole.Customers));
         commands.put("customerAccountHistory", new ShowAccountHistoryCommand("/customer/customerAccountHistory.jsp","Your Account History",SecurityRole.Customers));
         commands.put("customerAddTransfer", new CreateTransferCommand("customer/customerViewAccount.jsp","Account Details",SecurityRole.Customers));
         
@@ -46,12 +46,12 @@ public class Factory {
         commands.put("listAccounts", new ListAllBankAccountsCommand("/bankTeller/listAccounts.jsp","Accounts List",SecurityRole.BankTellers));           
         commands.put("editCustomer", new EditCustomerCommand("/bankTeller/editCustomer.jsp", "Edit Customer",SecurityRole.BankTellers));     
         commands.put("comitEditCustomer", new CommitEditCustomerCommand("/bankTeller/editCustomer.jsp", "Edit Customer",SecurityRole.BankTellers));
-        commands.put("createAccount", new AddAccountCommand("/bankTeller/addAccount.jsp","Create Account",SecurityRole.BankTellers));
+        commands.put("addAccount", new AddAccountCommand("/bankTeller/addAccount.jsp","Create Account",SecurityRole.BankTellers));
         commands.put("viewCustomer", new ViewCustomerCommand("/bankTeller/viewCustomer.jsp","View Customer",SecurityRole.BankTellers));                
         commands.put("viewAccount", new ViewAccountCommand("/bankTeller/viewAccount.jsp","Account View",SecurityRole.BankTellers));
         commands.put("accountHistory", new ShowAccountHistoryCommand("/bankTeller/accountHistory.jsp","Account History",SecurityRole.BankTellers));
         commands.put("addTransfer", new CreateTransferCommand("/bankteller/viewAccount.jsp","Account View",SecurityRole.BankTellers));
-        
+        commands.put("commitAddAccount", new CommitAddAccountCommand("/bankTeller/viewCustomer.jsp","View Customer",SecurityRole.BankTellers));
 
         
         //all mobile
