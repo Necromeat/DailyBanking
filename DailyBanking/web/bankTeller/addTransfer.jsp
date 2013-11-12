@@ -20,7 +20,7 @@
         <label>Message:  </label>
         <input type="text" name="message" id="message"><br>
         <input type="submit" value="Submit">
-        <input type="hidden" name="command" value="addTransfer">
+        <input type="hidden" name="command" value="commitTransfer">
         <input type="hidden" name="accountid" value="${account.accountId}">
         
     </form>
