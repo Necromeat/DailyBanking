@@ -63,7 +63,7 @@ public class TargetCommand implements Command {
                 nav = "<a href=\"Controller?command=customerIndex&username="+username+"\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
             case "Account Details":
-                nav = "<a href=\"Controller?command=customerIndex&username="+username+"\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username="+username+"&id="+userid+"\">Profile</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                nav = "<a href=\"Controller?command=customerIndex&username="+username+"\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username="+username+"&userid="+userid+"\">Profile</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
         }
         return nav;

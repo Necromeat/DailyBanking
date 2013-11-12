@@ -43,7 +43,7 @@ public class LoginCommand implements Command {
                     nextPage = roleToTarget.get(role);
                     String curRole = ""+role;
                     if(curRole.equals("Customers")){
-                        request.setAttribute("title", "Customer Menu");
+                        request.setAttribute("title", "Customer Index");
                         request.setAttribute("navigation", "<a id=\"activetab\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>");
                     }
                     if(curRole.equals("BankTellers")){

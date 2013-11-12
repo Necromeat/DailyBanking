@@ -21,7 +21,7 @@ public class ViewCustomerCommand extends TargetCommand {
     @Override
     public String execute(HttpServletRequest request) {
         
-        String idAsstr= request.getParameter("custid");
+        String idAsstr= request.getParameter("userid");
         long id = Long.parseLong(idAsstr);
         Customer cust = Factory.getBankController().getCustomer(id);
         request.setAttribute("customer", cust);
