@@ -15,7 +15,7 @@
                 <td>${customer.customerId}</td>
                 <td>${customer.firstName} ${customer.lastName}</td>
                 <td>${customer.email}</td>
-                <td><a href="Controller?custid=${customer.customerId}&command=viewCustomer">Customer Profile</a></td>
+                <td><a href="Controller?userid=${customer.customerId}&command=viewCustomer">Customer Profile</a></td>
             </tr>
         </c:forEach>
     </table> 

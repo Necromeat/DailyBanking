@@ -4,7 +4,7 @@
 
     <div id="basicPanel">
             <h3>Account Owner: ${account.owner.firstName} ${account.owner.lastName}</h3>
-            <a href="Controller?custid=${account.owner.customerId}&command=viewCustomer">View Customer</a>
+            <a href="Controller?userid=${account.owner.customerId}&command=viewCustomer">View Customer</a>
     </div>
 
     <div id="basicPanel">
