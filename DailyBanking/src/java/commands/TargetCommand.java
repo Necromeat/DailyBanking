@@ -14,7 +14,7 @@ public class TargetCommand implements Command {
     private final String title;
     private final SecurityRole role;
     private String username =  null;  
-    private long id = 0;
+    private long userid = 0;
    
 
     public TargetCommand(String target, String title, SecurityRole role) {
@@ -27,7 +27,10 @@ public class TargetCommand implements Command {
     public String execute(HttpServletRequest request) {
         username = request.getParameter("username");
         request.setAttribute("username", username);
-        request.setAttribute("id", id);                 //if(breaks EVERYTHING!!!){delete;}
+        if(request.getParameter("userid") != null){
+            userid = Long.parseLong(request.getParameter("userid"));
+        }
+        request.setAttribute("userid", userid);                 //if(breaks EVERYTHING!!!){delete;}
         request.setAttribute("title", title);
         request.setAttribute("navigation", setNav(title));
         return target;
@@ -60,7 +63,7 @@ public class TargetCommand implements Command {
                 nav = "<a href=\"Controller?command=customerIndex&username="+username+"\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
             case "Account Details":
-                nav = "<a href=\"Controller?command=customerIndex&username="+username+"\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username="+username+"&id="+id+"\">Profile</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                nav = "<a href=\"Controller?command=customerIndex&username="+username+"\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username="+username+"&id="+userid+"\">Profile</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
         }
         return nav;
