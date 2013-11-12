@@ -35,7 +35,7 @@ public class Factory {
         //customer
         commands.put("customerIndex", new CustomerIndexCommand("/customer/customerIndex.jsp", "Customer Index",SecurityRole.Customers));
         commands.put("customerViewDetails", new ViewCustomerCommand("/customer/customerViewDetails.jsp","Your Details",SecurityRole.Customers));
-        commands.put("customerViewAccount", new ViewAccountCommand("/customer/customerViewAccount.jsp","Account Details",SecurityRole.Customers));
+//        commands.put("customerViewAccount", new ViewAccountCommand("/customer/customerViewAccount.jsp","Account Details",SecurityRole.Customers));
         commands.put("customerAccountHistory", new ShowAccountHistoryCommand("/customer/customerAccountHistory.jsp","Your Account History",SecurityRole.Customers));
         commands.put("customerAddTransfer", new CreateTransferCommand("customer/customerViewAccount.jsp","Account Details",SecurityRole.Customers));
         

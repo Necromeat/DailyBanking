@@ -21,11 +21,13 @@
             <tr>
                 <th>Account ID</th>
                 <th>Account Type</th>
+                <th>Account Balance</th>
             </tr>
             <c:forEach var="item" items="${customer.accounts}">
                 <tr><td>${item.accountId}</td>
                     <td>${item.accountType}</td>
-                    <td><a href="Controller?accountid=${item.accountId}&username=${username}&userid=${userid}&command=customerViewAccount">Account Details</a></td>                            
+                    <td>${item.balance}</td>
+                    <td><a href="Controller?accountid=${item.accountId}&username=${username}&userid=${userid}&command=customerAccountHistory">Account Details</a></td>                            
                 </tr>
             </c:forEach>
         </table>
