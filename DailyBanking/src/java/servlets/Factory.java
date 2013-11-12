@@ -50,17 +50,16 @@ public class Factory {
         commands.put("viewCustomer", new ViewCustomerCommand("/bankTeller/viewCustomer.jsp","View Customer",SecurityRole.BankTellers));                
         commands.put("viewAccount", new ViewAccountCommand("/bankTeller/viewAccount.jsp","Account View",SecurityRole.BankTellers));
         commands.put("accountHistory", new ShowAccountHistoryCommand("/bankTeller/accountHistory.jsp","Account History",SecurityRole.BankTellers));
-        commands.put("addTransfer", new CreateTransferCommand("/bankteller/viewAccount.jsp","Account View",SecurityRole.BankTellers));
         commands.put("commitAddAccount", new CommitAddAccountCommand("/bankTeller/viewCustomer.jsp","View Customer",SecurityRole.BankTellers));
-
+        commands.put("createTransfer", new CreateTransferCommand("/bankTeller/addTransfer.jsp","Create Transfer",SecurityRole.BankTellers));
+        commands.put("commitTransfer", new CommitTransferCommand("/bankTeller/viewAccount.jsp","Account View",SecurityRole.BankTellers));
         
         //all mobile
         commands.put("mobileMain", new TargetCommand("/all/mobile/mobileMain.jsp", "Main Page",SecurityRole.All));
-        commands.put("mobileShowLogin", new TargetCommand("/login/mobile/mobileLogin.jsp", "loginMobile",SecurityRole.All));
-        Map<SecurityRole,String> mobileRolePages = new HashMap<>();
-        mobileRolePages.put(SecurityRole.Customers, "/customer/mobile/mobileCustomerIndex.jsp");
-        commands.put("mobileLogin", new LoginCommand(mobileRolePages,"/login/mobile/mobileLogin.jsp"));
-        //commands.put("mobileCustomerIndex", new CustomerIndexCommand("/customer/mobile/mobilCustomerIndex.jsp", "Customer Index",SecurityRole.Customers));
+        commands.put("mobileShowLogin", new TargetCommand("/login/mobile/mobileLogin.jsp","Login Page",SecurityRole.All));
+        Map<SecurityRole,String> rolePages2 = new HashMap<>();
+        rolePages2.put(SecurityRole.Customers, "/customer/mobile/mobileCustomerIndex.jsp");
+        commands.put("mobileLogin", new LoginCommand(rolePages2,"/login/mobile/mobileLogin.jsp"));
     }
 
     public static Factory getInstance() {

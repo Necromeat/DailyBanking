@@ -36,7 +36,7 @@ public class CommitTransferCommand extends TargetCommand {
             double transfer = Double.parseDouble(amount);
 
             if (!request.getParameter("amount").isEmpty()) {
-//                servlets.DummyBankController.getInstance().newTransfer(accountid,accountid, toId, transfer, message);
+            Factory.getBankController().newTransfer(accountid,accountid, toId, transfer, message);
             }
         }
         
