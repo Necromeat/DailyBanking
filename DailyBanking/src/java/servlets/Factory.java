@@ -57,10 +57,10 @@ public class Factory {
         //all mobile
         commands.put("mobileMain", new TargetCommand("/all/mobile/mobileMain.jsp", "Main Page",SecurityRole.All));
         commands.put("mobileShowLogin", new TargetCommand("/login/mobile/mobileLogin.jsp", "loginMobile",SecurityRole.All));
-        Map<SecurityRole,String> mobileRolePages = new HashMap<>();
-        mobileRolePages.put(SecurityRole.Customers, "/customer/mobile/mobileCustomerIndex.jsp");
-        commands.put("mobileLogin", new LoginCommand(mobileRolePages,"/login/mobile/mobileLogin.jsp"));
-        //commands.put("mobileCustomerIndex", new CustomerIndexCommand("/customer/mobile/mobilCustomerIndex.jsp", "Customer Index",SecurityRole.Customers));
+        Map<SecurityRole,String> rolepages = new HashMap<>();
+        rolepages.put(SecurityRole.Customers, "/customer/mobile/mobileCustomerIndex.jsp");
+        commands.put("mobileLogin", new LoginCommand(rolepages,"/login/mobile/mobileLogin.jsp"));
+        commands.put("mobileCustomerIndex", new CustomerIndexCommand("/customer/mobile/mobileCustomerIndex.jsp", "Customer Index",SecurityRole.Customers));
     }
 
     public static Factory getInstance() {
