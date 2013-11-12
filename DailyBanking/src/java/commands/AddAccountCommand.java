@@ -1,14 +1,16 @@
-
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package commands;
 
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
-import shared.Account;
 import shared.Customer;
 
 /**
  *
- * @author Aaron, Kris, Lars, Timea, @08/11/2013
+ * @author krismaini
  */
 public class AddAccountCommand extends TargetCommand{
 
@@ -17,17 +19,13 @@ public class AddAccountCommand extends TargetCommand{
     }
 
     
+    
     @Override
     public String execute(HttpServletRequest request){
-        String custID = request.getParameter("custid");
-        if(!custID.isEmpty()){
-            Long id = Long.parseLong(custID);
-            Customer cust = servlets.Factory.getBankController().getCustomer(id);
-            String accountType = request.getParameter("account");
-            Account newAccount = new Account(accountType, 0.0);
-            servlets.Factory.getBankController().addAccount(cust.getCustomerId(),newAccount);
-            request.setAttribute("customer", cust);
-        }
+        String idAsString = request.getParameter("custid");
+        Long id = Long.parseLong(idAsString);
+        Customer cust = servlets.Factory.getBankController().getCustomer(id);
+        request.setAttribute("customer", cust);
         return super.execute(request);
     }
 }

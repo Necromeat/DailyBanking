@@ -19,7 +19,7 @@
             <label for="custid">Check box to confirm</label>
             <input type="checkbox" name="custid" value=${customer.customerId}><br>
             <input type="submit" value="Submit">
-            <input type="hidden" name="command" value="addAccount">
+            <input type="hidden" name="command" value="commitAddAccount">
         </form>
         
         
