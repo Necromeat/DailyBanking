@@ -61,6 +61,9 @@ public class Factory {
         rolePages2.put(SecurityRole.Customers, "/customer/mobile/mobileCustomerIndex.jsp");
         commands.put("mobileLogin", new LoginCommand(rolePages2,"/login/mobile/mobileLogin.jsp"));
         commands.put("mobileLogout", new LogoutCommand("/all/mobile/mobileMain.jsp","Main Page", SecurityRole.All));
+        commands.put("mobileViewDetails", new ViewCustomerCommand("/customer/mobile/mobileViewDetails.jsp","Your Details",SecurityRole.Customers));
+        commands.put("mobileViewAccounts", new ViewCustomerAccountsCommand("/customer/mobile/mobileViewAccounts.jsp","Your Accounts",SecurityRole.Customers));
+        commands.put("mobileAccountHistory", new ShowAccountHistoryCommand("/customer/mobile/mobileAccountHistory.jsp","Your Account History",SecurityRole.Customers));
     }
 
     public static Factory getInstance() {
