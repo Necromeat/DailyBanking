@@ -1,10 +1,22 @@
 <%@include file="../WEB-INF/jspf/header.jspf" %>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        //var selectedAccount;
+        $("#account-select").on('change', function(event) {
+             var selectedAccount = $("#account-select").find('option:selected').text();
+            //alert("account: " + selection);                                                            $(this).text()
+            $('#transfer-container').html('<a href="Controller?command=customerAddTransfer&accountid=' + selectedAccount + '&username=${username}&userid=${userid}">Start new transfer</a>');
+        });
+    });
+</script>
+
 <div id="main">
 
     <p id="username">${username} is currently logged in</p>
 
     <div id="basicPanel">
+        <h3>Your accounts</h3>
         <c:forEach var="custAccount" items="${custAccounts}">
             <table>
                 <tr>
@@ -23,10 +35,21 @@
     </div>
 
     <div id="basicPanel">
-        <%--<a href="Controller?accountid=${account.accountId}&username=${username}&userid=${userid}&command=customerAccountHistory">View Transaction's</a>--%>
+        <h3>Choose an account to start a transaction</h3>
+        <form id="accounts">
+            <select id='account-select'>
+                <option value="">Select</option>
+                <c:forEach var="custAccount" items="${custAccounts}">
+                    <option value=${custAccount}>${custAccount.accountId}</option>
+                </c:forEach>
+            </select>
+        </form>
+        <div id="transfer-container">
 
-        <a href="Controller?accountid=${account.accountId}&username=${username}&userid=${userid}&command=customerCreateTransfer">Make Transfer</a>
+        </div>
+        <%--<a href="Controller?command=customerAddTransfer&accountid=${selectedAccount}&username=${username}&userid=${userid}">Make Transfer</a>--%>
     </div>
+
 
 </div>
 
