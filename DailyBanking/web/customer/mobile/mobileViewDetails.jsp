@@ -13,7 +13,7 @@
         <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
         <script>
             $(document).bind('mobileinit', function() {
-                $.mobile.page.prototype.options.addBackBtn = true;
+                $.mobile.page.prototype.options.addBackBtn = false;
             });
         </script>
     </head>
@@ -26,8 +26,14 @@
 
             <div data-role="content">
                 <p id="username">${username} is currently logged in</p>
-                <a href="Controller?userid=${userid}&username=${username}&command=mobileViewDetails">Your Bank Profile</a>
 
+                <div>
+                    <h1>Your profile:</h1><br>
+                    <h4>Name: ${customer.firstName} ${customer.lastName}</h4>
+                    <h4>Number: ${customer.customerId}</h4>
+                    <h4>Email: ${customer.email}</h4><br>
+                </div>
+                <a href="Controller?userid=${userid}&username=${username}&command=mobileViewAccounts">Your Bank Profile</a>
             </div>
 
             <div data-role="footer" data-position="fixed"> <!-- Add data-position="fixed" to align to button -->
