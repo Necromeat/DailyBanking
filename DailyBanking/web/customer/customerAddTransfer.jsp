@@ -23,6 +23,7 @@
         <input type="submit" value="Submit">
         <input type="hidden" name="command" value="customerCommitTransfer">
         <input type="hidden" name="accountid" value="${account.accountId}">
+        <input type="hidden" name="userid" value="${account.owner.customerId}">
         
     </form>
     </div>
