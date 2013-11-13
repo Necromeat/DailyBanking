@@ -11,17 +11,17 @@
         
     <div id="basicPanel">
     
-    <h1>Transfer between accounts</h1><br><br>
+    <h1>Transfer from account ${account.accountType} ${account.accountId}</h1><br><br>
     
     <form>
         <label>To account:  </label>
-        <input type="text" name="toAccount" id="toAccount"><br>
+        <input type="text" name="toAccount" id="toAccount" required><br>
         <label>Amount:    </label>
-        <input type="text" name="amount" id="amount"><br>
+        <input type="text" name="amount" id="amount" required><br>
         <label>Message:  </label>
-        <input type="text" name="message" id="message"><br>
+        <input type="text" name="message" id="message" required><br>
         <input type="submit" value="Submit">
-        <input type="hidden" name="command" value="addTransfer">
+        <input type="hidden" name="command" value="customerCommitTransfer">
         <input type="hidden" name="accountid" value="${account.accountId}">
         
     </form>

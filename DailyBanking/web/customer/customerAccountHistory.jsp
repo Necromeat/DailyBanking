@@ -34,6 +34,9 @@
             </c:forEach>
         </table>
     </div>
+            <div id="basicPanel">
+        <a href="Controller?&accountid=${account.accountId}&username=${username}&userid=${userid}&command=customerAddTransfer">Make Transfer</a>
+    </div>
 
 </div>
 

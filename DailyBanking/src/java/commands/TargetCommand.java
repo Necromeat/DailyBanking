@@ -63,10 +63,13 @@ public class TargetCommand implements Command {
 //                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
 //                break;
             case "Your Account History":
-                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Back to accounts</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a href=\"Controller?command=customerViewAccounts&username=" + username + "&userid=" + userid + "\">Back to Accounts</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
             case "Your Accounts":
-                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a id=\"lougouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
+                break;
+            case "Customer Transaction":
+                nav = "<a href=\"Controller?command=customerIndex&username=" + username + "\">Menu</a>\n<a href=\"Controller?command=customerViewDetails&username=" + username + "&userid=" + userid + "\">Profile</a>\n<a href=\"Controller?command=customerViewAccounts&username=" + username + "&userid=" + userid + "\">Back to Accounts</a>\n<a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>";
                 break;
                 
             //bankTeller
