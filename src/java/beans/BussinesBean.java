@@ -61,8 +61,11 @@ public class BussinesBean implements BusinessInterface {
     }
 
     @Override
-    public CustomerDTO getOwner() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public CustomerDTO getOwner(Long id) {
+       Customer c = em.find(Customer.class, id);  
+       CustomerDTO customerDTOtemp = new CustomerDTO(c.getCfirstname(),c.getClastname(),c.getCemail());
+       return null;
+    
     }
 
     @Override
@@ -155,10 +158,7 @@ public class BussinesBean implements BusinessInterface {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void CustomerBeanBuildCustomerById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     @Override
     public void addAccount(AccountDTO account) {
@@ -247,6 +247,11 @@ public class BussinesBean implements BusinessInterface {
 
     public void persist(Object object) {
         em.persist(object);
+    }
+
+    @Override
+    public CustomerDTO getCustomer(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
