@@ -6,6 +6,7 @@ package contract;
 
 import DTO.AccountDTO;
 import DTO.CustomerDTO;
+import DTO.UserDTO;
 import java.util.Collection;
 import javax.ejb.Remote;
 
@@ -25,5 +26,10 @@ public interface BankDataInterface {
     void addAccount(Long custID, AccountDTO account);
     void newTransfer(long custID, long fromID, long toID, double amount, String message);
     void saveEditedCustomer(CustomerDTO cust, CustomerDTO temp);
+    
+    //BankTellers
+     UserDTO getUser(String email);
+     
+    
     
 }

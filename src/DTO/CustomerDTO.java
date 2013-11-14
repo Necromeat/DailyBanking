@@ -13,7 +13,6 @@ public class CustomerDTO implements Serializable {
   private String lastName;
   private String email;
   private List<AccountDTO> accounts = new ArrayList();
-  private static int nextid = 1000;
   
     public long getCustomerId() {
     return customerId;
@@ -56,11 +55,11 @@ public class CustomerDTO implements Serializable {
     this.accounts = accounts;
   }
 
-  public CustomerDTO(String firstName, String lastName, String email) {
+  public CustomerDTO(long cusid,String firstName, String lastName, String email) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
-    customerId = nextid++;
+    customerId = cusid;
   }
   
   public void addAccount(AccountDTO account){
