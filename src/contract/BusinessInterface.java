@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import DTO.*;
-import java.util.Map;
 import javax.ejb.Remote;
 
 /**
@@ -18,13 +17,13 @@ import javax.ejb.Remote;
 
 @Remote
 public interface BusinessInterface {
-      //Account 
+    //Account 
     void AddIntrest(double intrest);
     Transaction createTransaction(double amount, String message);
     long getAccountId();
     String getAccountType();
     double getBalance();
-    CustomerDTO getOwner();
+    CustomerDTO getOwner(Long id);
     Collection<MessageDTO> getStatements();
     List<Transaction> getTransactions();
     void setAccountId(long accountId);
@@ -55,7 +54,7 @@ public interface BusinessInterface {
     void setStatment(Date date, String Statment);
     
     /*Customer*/
-    void CustomerBeanBuildCustomerById(Long id);
+    CustomerDTO getCustomer(Long id);
     void addAccount(AccountDTO account);
     Collection<AccountDTO> getAccounts(Long customerid);
     long getCustomerId();
