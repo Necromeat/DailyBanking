@@ -13,11 +13,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -27,40 +29,47 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Andrew
  */
 @Entity
-@Table(name = "CUSTOMER")
+@Table(name = "USERS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
-    @NamedQuery(name = "Customer.findById", query = "SELECT c FROM Customer c WHERE c.id = :id"),
-    @NamedQuery(name = "Customer.findByCfirstname", query = "SELECT c FROM Customer c WHERE c.cfirstname = :cfirstname"),
-    @NamedQuery(name = "Customer.findByClastname", query = "SELECT c FROM Customer c WHERE c.clastname = :clastname"),
-    @NamedQuery(name = "Customer.findByCemail", query = "SELECT c FROM Customer c WHERE c.cemail = :cemail")})
-public class Customer implements Serializable {
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
+    @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id"),
+    @NamedQuery(name = "Users.findByUserName", query = "SELECT u FROM Users u WHERE u.userName = :userName"),
+    @NamedQuery(name = "Users.findByUserPassword", query = "SELECT u FROM Users u WHERE u.userPassword = :userPassword")})
+public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 80)
+    @Column(name = "USER_NAME")
+    private String userName;
     @Size(max = 80)
-    @Column(name = "CFIRSTNAME")
-    private String cfirstname;
-    @Size(max = 80)
-    @Column(name = "CLASTNAME")
-    private String clastname;
-    @Size(max = 80)
-    @Column(name = "CEMAIL")
-    private String cemail;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
+    @Column(name = "USER_PASSWORD")
+    private String userPassword;
+    @ManyToMany(mappedBy = "usersCollection")
+    private Collection<Groups> groupsCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "users")
+    private UsersDetails usersDetails;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "users")
     private CustomerDetails customerDetails;
     @OneToMany(mappedBy = "owner")
     private Collection<Account> accountCollection;
 
-    public Customer() {
+    public Users() {
     }
 
-    public Customer(Long id) {
+    public Users(Long id) {
         this.id = id;
+    }
+
+    public Users(Long id, String userName) {
+        this.id = id;
+        this.userName = userName;
     }
 
     public Long getId() {
@@ -71,28 +80,37 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public String getCfirstname() {
-        return cfirstname;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setCfirstname(String cfirstname) {
-        this.cfirstname = cfirstname;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getClastname() {
-        return clastname;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setClastname(String clastname) {
-        this.clastname = clastname;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
-    public String getCemail() {
-        return cemail;
+    @XmlTransient
+    public Collection<Groups> getGroupsCollection() {
+        return groupsCollection;
     }
 
-    public void setCemail(String cemail) {
-        this.cemail = cemail;
+    public void setGroupsCollection(Collection<Groups> groupsCollection) {
+        this.groupsCollection = groupsCollection;
+    }
+
+    public UsersDetails getUsersDetails() {
+        return usersDetails;
+    }
+
+    public void setUsersDetails(UsersDetails usersDetails) {
+        this.usersDetails = usersDetails;
     }
 
     public CustomerDetails getCustomerDetails() {
@@ -122,10 +140,10 @@ public class Customer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Customer)) {
+        if (!(object instanceof Users)) {
             return false;
         }
-        Customer other = (Customer) object;
+        Users other = (Users) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -134,7 +152,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Customer[ id=" + id + " ]";
+        return "entities.Users[ id=" + id + " ]";
     }
     
 }

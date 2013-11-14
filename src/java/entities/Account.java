@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByAccountId", query = "SELECT a FROM Account a WHERE a.accountId = :accountId"),
     @NamedQuery(name = "Account.findByAccountType", query = "SELECT a FROM Account a WHERE a.accountType = :accountType"),
     @NamedQuery(name = "Account.findByBalance", query = "SELECT a FROM Account a WHERE a.balance = :balance")})
-    
 public class Account implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,7 +51,7 @@ public class Account implements Serializable {
     private Collection<AccountTransaction> accountTransactionCollection;
     @JoinColumn(name = "OWNER", referencedColumnName = "ID")
     @ManyToOne
-    private Customer owner;
+    private Users owner;
 
     public Account() {
     }
@@ -94,11 +93,11 @@ public class Account implements Serializable {
         this.accountTransactionCollection = accountTransactionCollection;
     }
 
-    public Customer getOwner() {
+    public Users getOwner() {
         return owner;
     }
 
-    public void setOwner(Customer owner) {
+    public void setOwner(Users owner) {
         this.owner = owner;
     }
 

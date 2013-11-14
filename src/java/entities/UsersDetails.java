@@ -23,19 +23,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Andrew
  */
 @Entity
-@Table(name = "CUSTOMER_DETAILS")
+@Table(name = "USERS_DETAILS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CustomerDetails.findAll", query = "SELECT c FROM CustomerDetails c"),
-    @NamedQuery(name = "CustomerDetails.findById", query = "SELECT c FROM CustomerDetails c WHERE c.id = :id"),
-    @NamedQuery(name = "CustomerDetails.findByFirstName", query = "SELECT c FROM CustomerDetails c WHERE c.firstName = :firstName"),
-    @NamedQuery(name = "CustomerDetails.findByLastName", query = "SELECT c FROM CustomerDetails c WHERE c.lastName = :lastName"),
-    @NamedQuery(name = "CustomerDetails.findByAddress", query = "SELECT c FROM CustomerDetails c WHERE c.address = :address"),
-    @NamedQuery(name = "CustomerDetails.findByZip", query = "SELECT c FROM CustomerDetails c WHERE c.zip = :zip"),
-    @NamedQuery(name = "CustomerDetails.findByRegion", query = "SELECT c FROM CustomerDetails c WHERE c.region = :region"),
-    @NamedQuery(name = "CustomerDetails.findByEmail", query = "SELECT c FROM CustomerDetails c WHERE c.email = :email"),
-    @NamedQuery(name = "CustomerDetails.findByPhone", query = "SELECT c FROM CustomerDetails c WHERE c.phone = :phone")})
-public class CustomerDetails implements Serializable {
+    @NamedQuery(name = "UsersDetails.findAll", query = "SELECT u FROM UsersDetails u"),
+    @NamedQuery(name = "UsersDetails.findById", query = "SELECT u FROM UsersDetails u WHERE u.id = :id"),
+    @NamedQuery(name = "UsersDetails.findByFirstName", query = "SELECT u FROM UsersDetails u WHERE u.firstName = :firstName"),
+    @NamedQuery(name = "UsersDetails.findByLastName", query = "SELECT u FROM UsersDetails u WHERE u.lastName = :lastName"),
+    @NamedQuery(name = "UsersDetails.findByEmail", query = "SELECT u FROM UsersDetails u WHERE u.email = :email")})
+public class UsersDetails implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -48,28 +44,18 @@ public class CustomerDetails implements Serializable {
     @Size(max = 80)
     @Column(name = "LAST_NAME")
     private String lastName;
-    @Size(max = 100)
-    @Column(name = "ADDRESS")
-    private String address;
-    @Column(name = "ZIP")
-    private Integer zip;
-    @Size(max = 50)
-    @Column(name = "REGION")
-    private String region;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 100)
     @Column(name = "EMAIL")
     private String email;
-    @Column(name = "PHONE")
-    private Integer phone;
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Users users;
 
-    public CustomerDetails() {
+    public UsersDetails() {
     }
 
-    public CustomerDetails(Integer id) {
+    public UsersDetails(Integer id) {
         this.id = id;
     }
 
@@ -97,44 +83,12 @@ public class CustomerDetails implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Integer getZip() {
-        return zip;
-    }
-
-    public void setZip(Integer zip) {
-        this.zip = zip;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Integer getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Integer phone) {
-        this.phone = phone;
     }
 
     public Users getUsers() {
@@ -155,10 +109,10 @@ public class CustomerDetails implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CustomerDetails)) {
+        if (!(object instanceof UsersDetails)) {
             return false;
         }
-        CustomerDetails other = (CustomerDetails) object;
+        UsersDetails other = (UsersDetails) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -167,7 +121,7 @@ public class CustomerDetails implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.CustomerDetails[ id=" + id + " ]";
+        return "entities.UsersDetails[ id=" + id + " ]";
     }
     
 }
