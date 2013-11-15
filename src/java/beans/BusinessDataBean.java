@@ -71,7 +71,8 @@ public class BusinessDataBean implements BankDataInterface {
         Collection<AccountDTO> ad = new ArrayList<>();
        
         for (Account t: a) {
-            AccountDTO temp = new AccountDTO(t.getAccountId(),t.getAccountType(),t.getBalance());
+            AccountDTO temp = new AccountDTO(t.getAccountId(),t.getAccountType(),t.getBalance());       
+            temp.setOwner(getCustomer(t.getOwner().getId()));
             ad.add(temp);
         }
         
