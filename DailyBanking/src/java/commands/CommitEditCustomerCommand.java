@@ -1,6 +1,7 @@
 
 package commands;
 
+import DTO.CustomerDTO;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
 import shared.Customer;
@@ -21,17 +22,17 @@ public class CommitEditCustomerCommand extends TargetCommand {
     public String execute(HttpServletRequest request) {
         String idAsString = request.getParameter("custid");
         long id = Long.parseLong(idAsString);
-        Customer cust = servlets.Factory.getBankController().getCustomer(id);
+        CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomer(id);
         request.setAttribute("customer", cust);
         
         String custFName = request.getParameter("newFirstName");
         String custLName = request.getParameter("newLastName");
         String custEmail = request.getParameter("newEmail");
-        Customer temp = new Customer(custFName, custLName, custEmail);
+        CustomerDTO temp = new CustomerDTO(0,custFName, custLName, custEmail);
         
-        servlets.Factory.getBankController().saveEditedCustomer(cust, temp);
+        servlets.Factory.getInstance().getBankController().saveEditedCustomer(cust, temp);
         
-        cust = servlets.Factory.getBankController().getCustomer(id);
+        cust = servlets.Factory.getInstance().getBankController().getCustomer(id);
         request.setAttribute("customer", cust);
         
         return super.execute(request); 

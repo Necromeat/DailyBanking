@@ -2,6 +2,7 @@
 package commands;
 
 
+import DTO.AccountDTO;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
@@ -24,7 +25,7 @@ public class ShowAccountHistoryCommand extends TargetCommand{
     public String execute(HttpServletRequest request) {
         String idAsstr= request.getParameter("accountid");
         long id = Long.parseLong(idAsstr);
-        Account account = Factory.getBankController().getAccount(id);
+        AccountDTO account = Factory.getInstance().getBankController().getAccount(id);
         request.setAttribute("account", account);
         Date date = new Date();
         request.setAttribute("today", date);

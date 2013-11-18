@@ -1,5 +1,6 @@
 package commands;
 
+import DTO.AccountDTO;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
 import servlets.Factory;
@@ -21,7 +22,7 @@ public class CommitTransferCommand extends TargetCommand {
     public String execute(HttpServletRequest request) {   
         String idAsstr= request.getParameter("accountid");
         long accountid = Long.parseLong(idAsstr);
-        Account account = Factory.getBankController().getAccount(accountid);
+        AccountDTO account = Factory.getInstance().getBankController().getAccount(accountid);
         request.setAttribute("account", account);
         
         String toAccount = request.getParameter("toAccount");
@@ -36,7 +37,7 @@ public class CommitTransferCommand extends TargetCommand {
             double transfer = Double.parseDouble(amount);
 
             if (!request.getParameter("amount").isEmpty()) {
-            Factory.getBankController().newTransfer(accountid,accountid, toId, transfer, message);
+            Factory.getInstance().getBankController().newTransfer(accountid,accountid, toId, transfer, message);
             }
         }
         

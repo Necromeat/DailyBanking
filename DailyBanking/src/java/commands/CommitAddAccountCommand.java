@@ -1,6 +1,8 @@
 
 package commands;
 
+import DTO.AccountDTO;
+import DTO.CustomerDTO;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
 import shared.Account;
@@ -22,10 +24,10 @@ public class CommitAddAccountCommand extends TargetCommand{
         String custID = request.getParameter("custid");
         if(!custID.isEmpty()){
             Long id = Long.parseLong(custID);
-            Customer cust = servlets.Factory.getBankController().getCustomer(id);
+            CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomer(id);
             String accountType = request.getParameter("account");
-            Account newAccount = new Account(accountType, 0.0);
-            servlets.Factory.getBankController().addAccount(cust.getCustomerId(),newAccount);
+            AccountDTO newAccount = new AccountDTO(null,accountType, 0.0);
+            servlets.Factory.getInstance().getBankController().addAccount(cust.getCustomerId(),newAccount);
             request.setAttribute("customer", cust);
         }
         return super.execute(request);

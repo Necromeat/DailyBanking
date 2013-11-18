@@ -2,6 +2,7 @@
 
 package commands;
 
+import DTO.AccountDTO;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
 import servlets.Factory;
@@ -23,7 +24,7 @@ public class CreateTransferCommand extends TargetCommand{
     public String execute(HttpServletRequest request) {
         String idAsstr= request.getParameter("accountid");
         long id = Long.parseLong(idAsstr);
-        Account account = Factory.getBankController().getAccount(id);
+        AccountDTO account = Factory.getInstance().getBankController().getAccount(id);
         request.setAttribute("account", account);
         return super.execute(request);
     }

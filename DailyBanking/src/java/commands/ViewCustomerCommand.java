@@ -1,10 +1,10 @@
 
 package commands;
 
+import DTO.CustomerDTO;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
 import servlets.Factory;
-import shared.Customer;
 
 /**
  *
@@ -23,7 +23,7 @@ public class ViewCustomerCommand extends TargetCommand {
         
         String idAsstr= request.getParameter("userid");
         long id = Long.parseLong(idAsstr);
-        Customer cust = Factory.getBankController().getCustomer(id);
+        CustomerDTO cust = Factory.getInstance().getBankController().getCustomer(id);
         request.setAttribute("customer", cust);
         return super.execute(request); //To change body of generated methods, choose Tools | Templates.
     }

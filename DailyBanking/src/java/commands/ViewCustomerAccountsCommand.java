@@ -1,6 +1,8 @@
 package commands;
 
 
+import DTO.AccountDTO;
+import DTO.CustomerDTO;
 import commands.TargetCommand;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +30,9 @@ public class ViewCustomerAccountsCommand extends TargetCommand{
     public String execute(HttpServletRequest request) {
         String idAsstr= request.getParameter("userid");
         long id = Long.parseLong(idAsstr);
-        Customer cust = Factory.getBankController().getCustomer(id);
+        CustomerDTO cust = Factory.getInstance().getBankController().getCustomer(id);
         request.setAttribute("customer", cust);
-        Collection<Account> custAccounts = cust.getAccounts();
+        Collection<AccountDTO> custAccounts = cust.getAccounts();
         request.setAttribute("custAccounts", custAccounts);
         return super.execute(request);
     }

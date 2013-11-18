@@ -1,6 +1,7 @@
 
 package commands;
 
+import DTO.CustomerDTO;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
 import shared.Customer;
@@ -23,8 +24,8 @@ public class AddCustomerCommand extends TargetCommand {
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         if (!firstName.equals("")) {
-            Customer cust = new Customer(firstName, lastName, email);
-            servlets.Factory.getBankController().addCustomer(cust);
+            CustomerDTO cust = new CustomerDTO(0,firstName, lastName, email);
+            servlets.Factory.getInstance().getBankController().addCustomer(cust);
             return super.execute(request);
         } else {
             return super.execute(request); //To change body of generated methods, choose Tools | Templates.

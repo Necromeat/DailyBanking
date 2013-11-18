@@ -2,11 +2,11 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <context-param>
         <param-name>portNonSSL</param-name>
-        <param-value>8080</param-value>
+        <param-value>19174</param-value>
     </context-param>
     <context-param>
         <param-name>portSSL</param-name>
-        <param-value>8181</param-value>
+        <param-value>19175</param-value>
     </context-param>
     <session-config>
         <session-timeout>
@@ -55,4 +55,19 @@
         <description/>
         <role-name>BankTellers</role-name>
     </security-role>
+    <ejb-ref>
+        <ejb-ref-name>BussinesBean</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <remote>contract.BusinessInterface</remote>
+    </ejb-ref>
+    <ejb-ref>
+        <ejb-ref-name>BankDataBean</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <remote>contract.BankDataInterface</remote>
+    </ejb-ref>
+    <ejb-ref>
+        <ejb-ref-name>BusinessDataBean</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <remote>contract.BankDataInterface</remote>
+    </ejb-ref>
 </web-app>

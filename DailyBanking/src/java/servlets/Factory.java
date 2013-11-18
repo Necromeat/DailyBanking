@@ -1,11 +1,16 @@
 package servlets;
 
 import commands.*;
+import contract.BankDataInterface;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
-import shared.BankDataController;
 import utils.UAgentInfo;
 
 /**
@@ -14,10 +19,12 @@ import utils.UAgentInfo;
  * @08/11/2013
  */
 public class Factory {
-
+    BankDataInterface bankDataBean = lookupBusinessDataBeanRemote();
+//    BankDataInterface bankDataBean = lookupBankDataBeanRemote();
     private static Factory instance = new Factory();
     private Map<String, Command> commands = new HashMap<>();
 
+    
     private Factory() {
         //all
         commands.put("main", new TargetCommand("/all/main.jsp", "Main Page",SecurityRole.All));
@@ -38,7 +45,7 @@ public class Factory {
         commands.put("customerViewAccounts", new ViewCustomerAccountsCommand("/customer/customerViewAccounts.jsp","Your Accounts",SecurityRole.Customers));
         commands.put("customerAccountHistory", new ShowAccountHistoryCommand("/customer/customerAccountHistory.jsp","Your Account History",SecurityRole.Customers));
         commands.put("customerAddTransfer", new CreateTransferCommand("/customer/customerAddTransfer.jsp","Customer Transaction",SecurityRole.Customers));
-        commands.put("customerCommitTransfer", new CommitTransferCommand("/customer/customerAccountHistory.jsp","Your Account History",SecurityRole.Customers));
+        commands.put("customerCommitTransfer", new CommitTransferCommand("/customer/customerAccountHistory.jsp","Your Account",SecurityRole.Customers));
         
         //bankTeller
         commands.put("bankTellerIndex", new BankTellerIndexCommand("/bankTeller/bankTellerIndex.jsp", "BankTeller Index",SecurityRole.BankTellers));
@@ -71,8 +78,8 @@ public class Factory {
         return instance;
     }
 
-    public static BankDataController getBankController() {
-        return DummyBankController.getInstance(); 
+    public  BankDataInterface getBankController() {
+        return  bankDataBean; 
     }
 
     public Command getCommand(String cmdStr, HttpServletRequest request) {
@@ -102,4 +109,27 @@ public class Factory {
         UAgentInfo detector = new UAgentInfo(userAgent, httpAccept);
         return detector.detectMobileQuick();
     }
+
+//    private BankDataInterface lookupBankDataBeanRemote() {
+//        try {
+//            Context c = new InitialContext();
+//            return (BankDataInterface) c.lookup("java:global/DailyBankingBusinessDataBase/BankDataBean!contract.BankDataInterface");
+//        } catch (NamingException ne) {
+//            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+//            throw new RuntimeException(ne);
+//        }
+//    }
+
+    private BankDataInterface lookupBusinessDataBeanRemote() {
+        try {
+            Context c = new InitialContext();
+            return (BankDataInterface) c.lookup("java:global/DailyBankingBusinessDataBase/BusinessDataBean!contract.BankDataInterface");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    
+   
 }

@@ -1,6 +1,7 @@
 
 package commands;
 
+import DTO.AccountDTO;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
@@ -21,7 +22,7 @@ public class ListAllBankAccountsCommand extends TargetCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        Collection<Account> accounts = Factory.getBankController().getAccounts();
+        Collection<AccountDTO> accounts = Factory.getInstance().getBankController().getAccounts();
         request.setAttribute("accounts", accounts);
         return super.execute(request); //To change body of generated methods, choose Tools | Templates.
     }

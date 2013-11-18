@@ -1,9 +1,9 @@
 
 package commands;
 
+import DTO.CustomerDTO;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
-import shared.Customer;
 
 /**
  *
@@ -21,7 +21,7 @@ public class EditCustomerCommand extends TargetCommand {
     public String execute(HttpServletRequest request) {
         String idAsString = request.getParameter("custid");
         long id = Long.parseLong(idAsString);
-        Customer cust = servlets.Factory.getBankController().getCustomer(id);
+        CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomer(id);
         request.setAttribute("customer", cust);
         
         return super.execute(request);

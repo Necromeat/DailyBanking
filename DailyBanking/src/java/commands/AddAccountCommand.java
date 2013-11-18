@@ -6,7 +6,7 @@ package commands;
 
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
-import shared.Customer;
+import DTO.CustomerDTO;
 
 /**
  *
@@ -24,7 +24,7 @@ public class AddAccountCommand extends TargetCommand{
     public String execute(HttpServletRequest request){
         String idAsString = request.getParameter("custid");
         Long id = Long.parseLong(idAsString);
-        Customer cust = servlets.Factory.getBankController().getCustomer(id);
+        CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomer(id);
         request.setAttribute("customer", cust);
         return super.execute(request);
     }

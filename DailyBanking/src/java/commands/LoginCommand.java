@@ -1,6 +1,8 @@
 
 package commands;
 
+import DTO.CustomerDTO;
+import DTO.UserDTO;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,9 +31,7 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        Customer cust = Factory.getBankController().getCustomerByEmail(username);
-        request.setAttribute("userid", cust.getCustomerId());
-        request.setAttribute("username", cust.getFirstName()+" "+cust.getLastName());
+        //If something smart = bankteller. create BankTellerDTO
         
         String nextPage = loginFailed;
         try {
@@ -47,10 +47,19 @@ public class LoginCommand implements Command {
                     if(curRole.equals("Customers")){
                         request.setAttribute("title", "Customer Index");
                         request.setAttribute("navigation", "<a id=\"activetab\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>");
+                        CustomerDTO cust = Factory.getInstance().getBankController().getCustomerByEmail(username);
+                        request.setAttribute("userid", cust.getCustomerId());
+                        request.setAttribute("username", cust.getFirstName()+" "+cust.getLastName());
+        
                     }
                     if(curRole.equals("BankTellers")){
                         request.setAttribute("title", "BankTellers Menu");
+                       
                         request.setAttribute("navigation", "<a id=\"activetab\">Menu</a>\n <a href=\"Controller?lastName=&firstName=&email=&command=addCustomer&username="+username+"\">Add Customer</a>\n <a href=\"Controller?command=listCustomers\">Customers List</a>\n <a href=\"Controller?command=listAccounts\">Accounts List</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>");
+                        
+                        UserDTO user = Factory.getInstance().getBankController().getUser(username);
+                        request.setAttribute("userid", user.getId());
+                        request.setAttribute("username", user.getUserFname());
                     }
                     break;
                 }
