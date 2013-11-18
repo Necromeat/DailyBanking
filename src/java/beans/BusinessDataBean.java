@@ -14,13 +14,13 @@ import entities.Users;
 import entities.UsersDetails;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.xml.registry.infomodel.User;
-
 /**
  *
  * @author Andrew
@@ -33,7 +33,32 @@ public class BusinessDataBean implements BankDataInterface {
 
     @Override
     public void addCustomer(CustomerDTO customer) {
-        em.persist(customer);
+        CustomerDetails temp = new CustomerDetails();
+        temp.setFirstName(customer.getFirstName());
+        temp.setLastName(customer.getLastName());
+        temp.setPhone(2);
+        temp.setRegion("cock");
+        temp.setUsers(null);
+        temp.setAddress("jsdf");
+        Account tempa = new Account();
+        List<Account> a = new ArrayList();
+        
+        for (AccountDTO t: customer.getAccounts()) {
+            tempa.setAccountId(t.getAccountId());
+            tempa.setAccountType(t.getAccountType());
+            tempa.setBalance(t.getBalance());
+            tempa.setOwner(new Users(t.getOwner().getCustomerId(),t.getOwner().getEmail()));
+            a.add(tempa);
+        }
+        
+        
+       EntityTransaction df = em.getTransaction();
+       df.begin();
+       
+       em.persist(temp);
+       em.persist(a);
+       em.getTransaction().commit();
+      
     }
 
     @Override
@@ -41,7 +66,13 @@ public class BusinessDataBean implements BankDataInterface {
         Query query = em.createNamedQuery("CustomerDetails.findById");
         query.setParameter("id", id);
         CustomerDetails c = (CustomerDetails)query.getSingleResult();
-        CustomerDTO temp = new CustomerDTO(c.getId(),c.getFirstName(),c.getLastName(),c.getEmail());        
+        CustomerDTO temp = new CustomerDTO(c.getId(),c.getFirstName(),c.getLastName(),c.getEmail());    
+         List<AccountDTO> ad = new ArrayList<>();
+        for (Account a: c.getUsers().getAccountCollection()) {                
+                 AccountDTO tema =new AccountDTO(a.getAccountId(),a.getAccountType(),a.getBalance());
+                 ad.add(tema);
+            }
+        temp.setAccounts(ad);
         return temp;
     }
 
@@ -86,10 +117,14 @@ public class BusinessDataBean implements BankDataInterface {
         Collection<CustomerDetails> cs = query.getResultList();
         
         Collection<CustomerDTO> cd = new ArrayList<>();
-       
+        List<AccountDTO> ad = new ArrayList<>();
         for (CustomerDetails t: cs) {
             CustomerDTO temp = new CustomerDTO(t.getId(),t.getFirstName(),t.getLastName(),t.getEmail());
-           
+            for (Account a: t.getUsers().getAccountCollection()) {                
+                 AccountDTO tema =new AccountDTO(a.getAccountId(),a.getAccountType(),a.getBalance());
+                 ad.add(tema);
+            }
+            temp.setAccounts(ad);
           
             cd.add(temp);
         }
@@ -151,6 +186,12 @@ public class BusinessDataBean implements BankDataInterface {
      return temp;
     
     
+    }
+
+    @Override
+    public CustomerDTO businessMethod() {
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
