@@ -30,18 +30,18 @@ public class Controller extends HttpServlet {
         Command command = Factory.getInstance().getCommand(commandString, request);
         String path = command.execute(request);
         
-//         if (command instanceof ShowLoginCommand && !request.isSecure() ) {
-////      String SSL = "https://" + request.getServerName() + ":" + PORT_SSL + request.getRequestURI()+"?command=showLogin";
-//      response.sendRedirect(SSL);
-//    } 
-//    else if(command instanceof LogoutCommand) {
-////      String nonSSL = "http://" + request.getServerName() + ":" + PORT_NON_SSL + request.getRequestURI();
-//      response.sendRedirect(nonSSL);
-//    }
-//    else {
-//      request.getRequestDispatcher(path).forward(request, response);
-//    }
-         request.getRequestDispatcher(path).forward(request, response);
+         if (command instanceof ShowLoginCommand && !request.isSecure() ) {
+      String SSL = "https://" + request.getServerName() + ":" + PORT_SSL + request.getRequestURI()+"?command=showLogin";
+      response.sendRedirect(SSL);
+    } 
+    else if(command instanceof LogoutCommand) {
+      String nonSSL = "http://" + request.getServerName() + ":" + PORT_NON_SSL + request.getRequestURI();
+      response.sendRedirect(nonSSL);
+    }
+    else {
+      request.getRequestDispatcher(path).forward(request, response);
+    }
+         
   }
 
   @Override
