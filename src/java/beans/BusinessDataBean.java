@@ -6,21 +6,26 @@ package beans;
 
 import DTO.AccountDTO;
 import DTO.CustomerDTO;
+import DTO.MessageDTO;
+import DTO.Transaction;
 import DTO.UserDTO;
 import contract.BankDataInterface;
-import entities.Account;
-import entities.CustomerDetails;
-import entities.Users;
-import entities.UsersDetails;
+import entities.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 /**
  *
  * @author Andrew
@@ -30,170 +35,132 @@ import javax.persistence.Query;
 public class BusinessDataBean implements BankDataInterface {
     @PersistenceContext(unitName = "DailyBankingBusinessDataBasePU")
     private EntityManager em;
-
+    @Resource
+    private UserTransaction utx;
     @Override
+    
     public void addCustomer(CustomerDTO customer) {
-        CustomerDetails temp = new CustomerDetails();
-        temp.setFirstName(customer.getFirstName());
-        temp.setLastName(customer.getLastName());
-        temp.setPhone(2);
-        temp.setRegion("cock");
-        temp.setUsers(null);
-        temp.setAddress("jsdf");
-        Account tempa = new Account();
-        List<Account> a = new ArrayList();
-        
-        for (AccountDTO t: customer.getAccounts()) {
-            tempa.setAccountId(t.getAccountId());
-            tempa.setAccountType(t.getAccountType());
-            tempa.setBalance(t.getBalance());
-            tempa.setOwner(new Users(t.getOwner().getCustomerId(),t.getOwner().getEmail()));
-            a.add(tempa);
+        try {
+            utx.begin();
+            
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(BusinessDataBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SystemException ex) {
+            Logger.getLogger(BusinessDataBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
-       EntityTransaction df = em.getTransaction();
-       df.begin();
-       
-       em.persist(temp);
-       em.persist(a);
-       em.getTransaction().commit();
-      
+    
+    
     }
 
     @Override
-    public CustomerDTO getCustomer(long id) {
-        Query query = em.createNamedQuery("CustomerDetails.findById");
-        query.setParameter("id", id);
-        CustomerDetails c = (CustomerDetails)query.getSingleResult();
-        CustomerDTO temp = new CustomerDTO(c.getId(),c.getFirstName(),c.getLastName(),c.getEmail());    
-         List<AccountDTO> ad = new ArrayList<>();
-        for (Account a: c.getUsers().getAccountCollection()) {                
-                 AccountDTO tema =new AccountDTO(a.getAccountId(),a.getAccountType(),a.getBalance());
-                 ad.add(tema);
-            }
-        temp.setAccounts(ad);
-        return temp;
+    public CustomerDTO getCustomer(long id) { 
+    
+              
+        UserDetail tempUser = em.find(UserDetail.class, id);
+        UserType tem = tempUser.getUserId();
+        CustomerDTO temp2 = new CustomerDTO(tem.getUserId(),tempUser.getFname(),tempUser.getLname(),tempUser.getEmail());
+       Query query = em.createNamedQuery("AccountDetail.findByCustomerId");
+       query.setParameter("customerId", id);
+        List<AccountDetail> accountDetailTemp = query.getResultList();
+        List<AccountDTO>accountstemp = new ArrayList();
+        for (AccountDetail f:accountDetailTemp) {
+            accountstemp.add(getAccount(f.getAccountId()));
+        }
+        
+        temp2.setAccounts(accountstemp);
+        
+       return temp2;
+        
     }
 
     @Override
     public CustomerDTO getCustomerByEmail(String email) {
-        Query query = em.createNamedQuery("CustomerDetails.findByEmail");
-        query.setParameter("email", email);
-        CustomerDetails c = (CustomerDetails)query.getSingleResult();
-        CustomerDTO temp = new CustomerDTO(c.getId(),c.getFirstName(),c.getLastName(),c.getEmail());        
-        return temp;
+     UserDetail tempUser = em.find(UserDetail.class, email);
+        UserType tem = tempUser.getUserId();
+        CustomerDTO temp2 = new CustomerDTO(tem.getUserId(),tempUser.getFname(),tempUser.getLname(),tempUser.getEmail());
+       Query query = em.createNamedQuery("AccountDetail.findByCustomerId");
+       query.setParameter("customerId", temp2.getCustomerId());
+        List<AccountDetail> accountDetailTemp = query.getResultList();
+        List<AccountDTO>accountstemp = new ArrayList();
+        for (AccountDetail f:accountDetailTemp) {
+            accountstemp.add(getAccount(f.getAccountId()));
+        }
+        
+        temp2.setAccounts(accountstemp);
+        
+       return temp2;
     }
 
     @Override
     public AccountDTO getAccount(long id) {
-        Account a = em.find(Account.class, id);
-        AccountDTO temp = new AccountDTO(a.getAccountId(),a.getAccountType(),a.getBalance());
-        return temp;
-        
+    AccountDetail tempAccountDetail = em.find(AccountDetail.class, id);
+    AccountType tempAccountType = em.find(AccountType.class, id);
+    CustomerDTO tempCustomer = getCustomer(tempAccountDetail.getCustomerId());
+    AccountDTO temp = new AccountDTO(tempAccountDetail.getAccountId(),tempAccountType.getAccountType(),tempAccountDetail.getBalance());
+    temp.setOwner(tempCustomer);
+    
+    return temp;
     }
 
     @Override
     public Collection<AccountDTO> getAccounts() {
-     Query query =em.createNamedQuery("Account.findAll");
+    Query query = em.createNamedQuery("AccountDetail.findAll");
+    Collection<AccountDetail> tempDetails;
+    Query queryAccountTans = em.createNamedQuery("AccountTransaction.findAll");
+    Collection<AccountTransaction> tempTrans;
+    tempTrans=queryAccountTans.getResultList();
+    Collection<AccountDTO> outDTO = new ArrayList();
     
-        Collection<Account> a = query.getResultList();
+    tempDetails = query.getResultList();
+        for (AccountDetail ad: tempDetails) {
+            AccountDTO tempAccountDTO = new AccountDTO(ad.getAccountId(),getAccount(ad.getAccountId()).getAccountType(),ad.getBalance());
+            tempAccountDTO.setOwner(getCustomer(ad.getCustomerId()));
+            List<Transaction> transaction = new ArrayList();
+            
+            for (AccountTransaction at:tempTrans) {
+                if(at.getAccountId().getAccountId() == tempAccountDTO.getAccountId()){
+                    Transaction tempa = new Transaction(at.getAmount(),at.getTypeOf()+" "+at.getMessage());
+                    transaction.add(tempa);
+                }
+            }
         
-        Collection<AccountDTO> ad = new ArrayList<>();
-       
-        for (Account t: a) {
-            AccountDTO temp = new AccountDTO(t.getAccountId(),t.getAccountType(),t.getBalance());       
-            temp.setOwner(getCustomer(t.getOwner().getId()));
-            ad.add(temp);
+            tempAccountDTO.setTransactions(transaction);
+            outDTO.add(tempAccountDTO);
         }
-        
-        return ad;
+    
+        return outDTO;
     }
 
     @Override
     public Collection<CustomerDTO> getCustomers() {
-    Query query =em.createNamedQuery("CustomerDetail.findAll");
-    
-        Collection<CustomerDetails> cs = query.getResultList();
-        
-        Collection<CustomerDTO> cd = new ArrayList<>();
-        List<AccountDTO> ad = new ArrayList<>();
-        for (CustomerDetails t: cs) {
-            CustomerDTO temp = new CustomerDTO(t.getId(),t.getFirstName(),t.getLastName(),t.getEmail());
-            for (Account a: t.getUsers().getAccountCollection()) {                
-                 AccountDTO tema =new AccountDTO(a.getAccountId(),a.getAccountType(),a.getBalance());
-                 ad.add(tema);
-            }
-            temp.setAccounts(ad);
-          
-            cd.add(temp);
-        }
-        
-        return cd;
-    
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void addAccount(Long custID, AccountDTO account) {
-        CustomerDetails c = em.find(CustomerDetails.class, custID);
-        CustomerDTO temp = new CustomerDTO(c.getId(),c.getFirstName(),c.getLastName(),c.getEmail());
-        temp.addAccount(account);
-        em.persist(temp);
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void newTransfer(long custID, long fromID, long toID, double amount, String message) {
-        Account aFrom = em.find(Account.class, fromID);
-        Account aTo = em.find(Account.class, toID);
-        CustomerDetails customer = em.find(CustomerDetails.class, custID);
-        
-        CustomerDTO temp= new CustomerDTO(customer.getId(),customer.getFirstName(),customer.getLastName(),customer.getEmail());
-        AccountDTO tempFrom = new AccountDTO(aFrom.getAccountId(), aFrom.getAccountType(),aFrom.getBalance());
-        AccountDTO tempTO = new AccountDTO(aTo.getAccountId(),aTo.getAccountType(),aTo.getBalance());
-        
-        tempFrom.createTransaction(amount, message);
-        tempTO.createTransaction(amount, message+"From: "+temp.getCustomerId());
-        
-        em.persist(tempFrom);
-        em.persist(tempTO);     
-        
-        
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void saveEditedCustomer(CustomerDTO cust, CustomerDTO temp) {
-    em.persist(temp);
-    
-    }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
-    public void persist(Object object) {
-        em.persist(object);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public UserDTO getUser(String email) {
-    
-     Query query =em.createNamedQuery("UsersDetails.findByEmail");
-     query.setParameter("email", email);
-     UsersDetails u = (UsersDetails) query.getSingleResult();
-     UserDTO temp = new UserDTO(u.getFirstName(),u.getLastName(),u.getEmail(),u.getId());
-     
-     return temp;
-    
-    
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public CustomerDTO businessMethod() {
-        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
-
 }
