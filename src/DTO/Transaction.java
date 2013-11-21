@@ -7,18 +7,19 @@ import java.util.Date;
  * @author Lars Mortensen
  */
 public class Transaction implements Serializable {
-  private static long nextId = 0;
   private long transactionId;
+  private long userid;
   private Date timestamp;
   private double amount;
   private double balance;
   private String info;
 
-  public Transaction(double amount, String info) {
+  public Transaction(long userid,long transactionid,double amount, String info) {
     this.timestamp = new Date();
     this.amount = amount;
     this.info = info;
-    transactionId = nextId++;
+    this.userid = userid;
+    this.transactionId = transactionid;
   }
 
   public double getBalance() {
@@ -60,6 +61,12 @@ public class Transaction implements Serializable {
   public void setInfo(String info) {
     this.info = info;
   }
+
+    public long getUserid() {
+        return userid;
+    }
+  
+  
 
     @Override
     public String toString() {

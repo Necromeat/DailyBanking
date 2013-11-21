@@ -29,7 +29,6 @@ public interface BankDataInterface {
     //BankTellers
      UserDTO getUser(String email);
 
-    CustomerDTO businessMethod();
      
     
     

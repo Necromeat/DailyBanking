@@ -47,8 +47,8 @@ public class AccountDTO  implements Serializable {
     this.balance = balance;
   }
   
-  public Transaction createTransaction(double amount, String message){
-    Transaction t = new Transaction(amount,message);
+  public Transaction createTransaction(long useridtemp, long transactionId, double amount, String message){
+    Transaction t = new Transaction(useridtemp,transactionId,amount,message);
     transactions.add(t);
     balance += amount;    
     t.setBalance(balance);
