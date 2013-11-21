@@ -17,21 +17,23 @@
 
     <div id="basicPanel">
         <h3>Your accounts</h3>
-        <c:forEach var="custAccount" items="${custAccounts}">
             <table>
                 <tr>
                     <th>Account ID</th>
                     <th>Account Type</th>
                     <th>Account Balance</th>
                 </tr>
+          <c:forEach var="custAccount" items="${custAccounts}">
+
                 <tr>
                     <td>${custAccount.accountId}</td>
                     <td>${custAccount.accountType}</td>
                     <td>${custAccount.balance}</td>
-                    <td><a href="Controller?accountid=${custAccount.accountId}&command=customerAccountHistory&username=${username}&custemail=${customer.email}">Account history</a></td>
+                    <td><a href="Controller?accountid=${custAccount.accountId}&custemail=${customer.email}&command=customerAccountHistory">Account history</a></td>
                 </tr>
+           </c:forEach>
             </table>
-        </c:forEach>
+     
     </div>
 
     <div id="basicPanel">

@@ -3,6 +3,7 @@ package commands;
 
 
 import DTO.AccountDTO;
+import DTO.CustomerDTO;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
@@ -23,10 +24,9 @@ public class ShowAccountHistoryCommand extends TargetCommand{
 
     @Override
     public String execute(HttpServletRequest request) {
-        String idAsstr= request.getParameter("accountid");
-        long id = Long.parseLong(idAsstr);
-        AccountDTO account = Factory.getInstance().getBankController().getAccount(id);
-        request.setAttribute("account", account);
+        String idAsstr= request.getParameter("custemail");
+        CustomerDTO cust = Factory.getInstance().getBankController().getCustomerByEmail(idAsstr);
+        request.setAttribute("account", cust.getAccounts());
         Date date = new Date();
         request.setAttribute("today", date);
         return super.execute(request); //To change body of generated methods, choose Tools | Templates.
