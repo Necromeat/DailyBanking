@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -44,8 +43,8 @@ public class AccountType implements Serializable {
     @Size(max = 30)
     @Column(name = "ACCOUNT_TYPE")
     private String accountType;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "accountType")
-    private AccountDetail accountDetail;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountType")
+    private Collection<AccountDetail> accountDetailCollection;
     @OneToMany(mappedBy = "accountId")
     private Collection<AccountTransaction> accountTransactionCollection;
 
@@ -72,12 +71,13 @@ public class AccountType implements Serializable {
         this.accountType = accountType;
     }
 
-    public AccountDetail getAccountDetail() {
-        return accountDetail;
+    @XmlTransient
+    public Collection<AccountDetail> getAccountDetailCollection() {
+        return accountDetailCollection;
     }
 
-    public void setAccountDetail(AccountDetail accountDetail) {
-        this.accountDetail = accountDetail;
+    public void setAccountDetailCollection(Collection<AccountDetail> accountDetailCollection) {
+        this.accountDetailCollection = accountDetailCollection;
     }
 
     @XmlTransient

@@ -17,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,6 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "EmployeeDetail.findAll", query = "SELECT e FROM EmployeeDetail e"),
     @NamedQuery(name = "EmployeeDetail.findByUserId", query = "SELECT e FROM EmployeeDetail e WHERE e.userId = :userId"),
+    @NamedQuery(name = "EmployeeDetail.findByFname", query = "SELECT e FROM EmployeeDetail e WHERE e.fname = :fname"),
+    @NamedQuery(name = "EmployeeDetail.findByLname", query = "SELECT e FROM EmployeeDetail e WHERE e.lname = :lname"),
     @NamedQuery(name = "EmployeeDetail.findByDepartmentId", query = "SELECT e FROM EmployeeDetail e WHERE e.departmentId = :departmentId"),
     @NamedQuery(name = "EmployeeDetail.findByPhone", query = "SELECT e FROM EmployeeDetail e WHERE e.phone = :phone")})
 public class EmployeeDetail implements Serializable {
@@ -39,13 +42,19 @@ public class EmployeeDetail implements Serializable {
     @NotNull
     @Column(name = "USER_ID")
     private long userId;
+    @Size(max = 50)
+    @Column(name = "FNAME")
+    private String fname;
+    @Size(max = 50)
+    @Column(name = "LNAME")
+    private String lname;
     @Column(name = "DEPARTMENT_ID")
     private Short departmentId;
     @Column(name = "PHONE")
     private BigInteger phone;
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private UserType userType;
+    private Users users;
 
     public EmployeeDetail() {
     }
@@ -60,6 +69,22 @@ public class EmployeeDetail implements Serializable {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
     public Short getDepartmentId() {
@@ -78,12 +103,12 @@ public class EmployeeDetail implements Serializable {
         this.phone = phone;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
 //    @Override

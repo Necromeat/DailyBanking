@@ -79,7 +79,7 @@ public class AccountTransaction implements Serializable {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

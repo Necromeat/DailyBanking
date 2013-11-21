@@ -27,13 +27,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Andrew
  */
 @Entity
-@Table(name = "USER_TYPE")
+@Table(name = "USERS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "UserType.findAll", query = "SELECT u FROM UserType u"),
-    @NamedQuery(name = "UserType.findByUserId", query = "SELECT u FROM UserType u WHERE u.userId = :userId"),
-    @NamedQuery(name = "UserType.findByUserType", query = "SELECT u FROM UserType u WHERE u.userType = :userType")})
-public class UserType implements Serializable {
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
+    @NamedQuery(name = "Users.findByUserId", query = "SELECT u FROM Users u WHERE u.userId = :userId"),
+    @NamedQuery(name = "Users.findByUserEmail", query = "SELECT u FROM Users u WHERE u.userEmail = :userEmail"),
+    @NamedQuery(name = "Users.findByUserPw", query = "SELECT u FROM Users u WHERE u.userPw = :userPw")})
+public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -41,22 +42,25 @@ public class UserType implements Serializable {
     @NotNull
     @Column(name = "USER_ID")
     private long userId;
-    @Size(max = 30)
-    @Column(name = "USER_TYPE")
-    private String userType;
-    @OneToMany(mappedBy = "userId")
-    private Collection<CustomerDetail> customerDetailCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userType")
+    @Size(max = 50)
+    @Column(name = "USER_EMAIL")
+    private String userEmail;
+    @Size(max = 100)
+    @Column(name = "USER_PW")
+    private String userPw;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "users")
+    private CustomerDetail customerDetail;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Collection<AccountDetail> accountDetailCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "users")
     private UserGroups userGroups;
-    @OneToMany(mappedBy = "userId")
-    private Collection<UserDetail> userDetailCollection;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userType")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "users")
     private EmployeeDetail employeeDetail;
 
-    public UserType() {
+    public Users() {
     }
 
-    public UserType(long userId) {
+    public Users(long userId) {
         this.userId = userId;
     }
 
@@ -68,21 +72,37 @@ public class UserType implements Serializable {
         this.userId = userId;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserPw() {
+        return userPw;
+    }
+
+    public void setUserPw(String userPw) {
+        this.userPw = userPw;
+    }
+
+    public CustomerDetail getCustomerDetail() {
+        return customerDetail;
+    }
+
+    public void setCustomerDetail(CustomerDetail customerDetail) {
+        this.customerDetail = customerDetail;
     }
 
     @XmlTransient
-    public Collection<CustomerDetail> getCustomerDetailCollection() {
-        return customerDetailCollection;
+    public Collection<AccountDetail> getAccountDetailCollection() {
+        return accountDetailCollection;
     }
 
-    public void setCustomerDetailCollection(Collection<CustomerDetail> customerDetailCollection) {
-        this.customerDetailCollection = customerDetailCollection;
+    public void setAccountDetailCollection(Collection<AccountDetail> accountDetailCollection) {
+        this.accountDetailCollection = accountDetailCollection;
     }
 
     public UserGroups getUserGroups() {
@@ -91,15 +111,6 @@ public class UserType implements Serializable {
 
     public void setUserGroups(UserGroups userGroups) {
         this.userGroups = userGroups;
-    }
-
-    @XmlTransient
-    public Collection<UserDetail> getUserDetailCollection() {
-        return userDetailCollection;
-    }
-
-    public void setUserDetailCollection(Collection<UserDetail> userDetailCollection) {
-        this.userDetailCollection = userDetailCollection;
     }
 
     public EmployeeDetail getEmployeeDetail() {
@@ -120,10 +131,10 @@ public class UserType implements Serializable {
 //    @Override
 //    public boolean equals(Object object) {
 //        // TODO: Warning - this method won't work in the case the id fields are not set
-//        if (!(object instanceof UserType)) {
+//        if (!(object instanceof Users)) {
 //            return false;
 //        }
-//        UserType other = (UserType) object;
+//        Users other = (Users) object;
 //        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
 //            return false;
 //        }
@@ -132,7 +143,7 @@ public class UserType implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.UserType[ userId=" + userId + " ]";
+        return "entities.Users[ userId=" + userId + " ]";
     }
     
 }
