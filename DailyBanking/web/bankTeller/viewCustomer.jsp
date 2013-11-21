@@ -7,8 +7,8 @@
         <h4>Customer Name: ${customer.firstName} ${customer.lastName}</h4>
         <h4>Customer Number: ${customer.customerId}</h4>
         <h4>Customer Email: ${customer.email}</h4><br>
-        <a href="Controller?custid=${customer.customerId}&command=editCustomer">Edit Customer</a>
-        <a href="Controller?custid=${customer.customerId}&command=addAccount">Add New Account</a>
+        <a href="Controller?custemail=${customer.email}&command=editCustomer">Edit Customer</a>
+        <a href="Controller?custemail=${customer.email}&command=addAccount">Add New Account</a>
     </div>
 
     <div id="basicPanel">

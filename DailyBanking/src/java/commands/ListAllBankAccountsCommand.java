@@ -6,7 +6,6 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
 import servlets.Factory;
-import shared.Account;
 
 /**
  *

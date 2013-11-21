@@ -29,7 +29,7 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String username = request.getParameter("username");
+        String username = request.getParameter("custemail");
         String password = request.getParameter("password");
         //If something smart = bankteller. create BankTellerDTO
         
@@ -48,8 +48,8 @@ public class LoginCommand implements Command {
                         request.setAttribute("title", "Customer Index");
                         request.setAttribute("navigation", "<a id=\"activetab\">Menu</a>\n <a id=\"logouttab\" href=\"Controller?command=logout\">Log Out</a>");
                         CustomerDTO cust = Factory.getInstance().getBankController().getCustomerByEmail(username);
-                        request.setAttribute("userid", cust.getCustomerId());
-                        request.setAttribute("username", cust.getFirstName()+" "+cust.getLastName());
+                        request.setAttribute("customer", cust);
+                       
         
                     }
                     if(curRole.equals("BankTellers")){

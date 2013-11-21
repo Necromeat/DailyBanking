@@ -20,9 +20,8 @@ public class CommitEditCustomerCommand extends TargetCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String idAsString = request.getParameter("custid");
-        long id = Long.parseLong(idAsString);
-        CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomer(id);
+        String idAsString = request.getParameter("custemail");
+        CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomerByEmail(idAsString);
         request.setAttribute("customer", cust);
         
         String custFName = request.getParameter("newFirstName");
@@ -32,7 +31,7 @@ public class CommitEditCustomerCommand extends TargetCommand {
         
         servlets.Factory.getInstance().getBankController().saveEditedCustomer(cust, temp);
         
-        cust = servlets.Factory.getInstance().getBankController().getCustomer(id);
+        cust = servlets.Factory.getInstance().getBankController().getCustomerByEmail(custEmail);
         request.setAttribute("customer", cust);
         
         return super.execute(request); 

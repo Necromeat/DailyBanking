@@ -7,8 +7,8 @@
 <%@include file="../WEB-INF/jspf/header.jspf"%>
 
 <div id="main">
-    <p id="username">${username} is currently logged in</p>
-    <a href="Controller?userid=${userid}&username=${username}&command=customerViewDetails">Your Bank Profile</a>
+    <p id="username">${customer.firstName} ${customer.lastName} is currently logged in</p>
+    <a href="Controller?custemail=${customer.email}&username=${username}&command=customerViewDetails">Your Bank Profile</a>
         
     <div id='basicPanel'>
         <h3>News Section</h3>

@@ -21,10 +21,9 @@ public class CommitAddAccountCommand extends TargetCommand{
     
     @Override
     public String execute(HttpServletRequest request){
-        String custID = request.getParameter("custid");
+        String custID = request.getParameter("custemail");
         if(!custID.isEmpty()){
-            Long id = Long.parseLong(custID);
-            CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomer(id);
+            CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomerByEmail(custID);
             String accountType = request.getParameter("account");
             AccountDTO newAccount = new AccountDTO(null,accountType, 0.0);
             servlets.Factory.getInstance().getBankController().addAccount(cust.getCustomerId(),newAccount);

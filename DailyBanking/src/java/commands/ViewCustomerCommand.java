@@ -21,9 +21,8 @@ public class ViewCustomerCommand extends TargetCommand {
     @Override
     public String execute(HttpServletRequest request) {
         
-        String idAsstr= request.getParameter("userid");
-        long id = Long.parseLong(idAsstr);
-        CustomerDTO cust = Factory.getInstance().getBankController().getCustomer(id);
+        String idAsstr= request.getParameter("custemail");
+        CustomerDTO cust = Factory.getInstance().getBankController().getCustomerByEmail(idAsstr);
         request.setAttribute("customer", cust);
         return super.execute(request); //To change body of generated methods, choose Tools | Templates.
     }

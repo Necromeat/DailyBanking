@@ -7,7 +7,7 @@
 <%@include file="../WEB-INF/jspf/header.jspf"%>
 
 <div id="main">
-    <p id="username">${username} is currently logged in</p>
+    <p id="username">${customer.firstName} ${customer.lastName} is currently logged in</p>
     
     <div id="basicPanel">
         <h1>Your profile:</h1><br>

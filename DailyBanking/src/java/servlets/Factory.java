@@ -20,7 +20,6 @@ import utils.UAgentInfo;
  */
 public class Factory {
     BankDataInterface bankDataBean = lookupBusinessDataBeanRemote();
-//    BankDataInterface bankDataBean = lookupBankDataBeanRemote();
     private static Factory instance = new Factory();
     private Map<String, Command> commands = new HashMap<>();
 
@@ -110,16 +109,6 @@ public class Factory {
         return detector.detectMobileQuick();
     }
 
-//    private BankDataInterface lookupBankDataBeanRemote() {
-//        try {
-//            Context c = new InitialContext();
-//            return (BankDataInterface) c.lookup("java:global/DailyBankingBusinessDataBase/BankDataBean!contract.BankDataInterface");
-//        } catch (NamingException ne) {
-//            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-//            throw new RuntimeException(ne);
-//        }
-//    }
-
     private BankDataInterface lookupBusinessDataBeanRemote() {
         try {
             Context c = new InitialContext();
@@ -129,6 +118,9 @@ public class Factory {
             throw new RuntimeException(ne);
         }
     }
+
+    
+    
 
     
    

@@ -6,7 +6,7 @@
         <h4>Customer Name: ${customer.firstName} ${customer.lastName}</h4>
         <h4>Customer Number: ${customer.customerId}</h4>
         <h4>Customer Email: ${customer.email}</h4><br>
-        <a href="Controller?custid=${customer.customerId}&command=viewCustomer">Customer Profile</a>
+        <a href="Controller?custemail=${custemail}&command=viewCustomer">Customer Profile</a>
     </div>
     
     <div id="basicPanel">
@@ -17,7 +17,7 @@
             <input type="radio" name="account" value="Time Deposit Account">Time Deposit Account<br><br>
             
             <label for="custid">Check box to confirm</label>
-            <input type="checkbox" name="custid" value=${customer.customerId}><br>
+            <input type="checkbox" name="custemail" value=${custemail}><br>
             <input type="submit" value="Submit">
             <input type="hidden" name="command" value="commitAddAccount">
         </form>

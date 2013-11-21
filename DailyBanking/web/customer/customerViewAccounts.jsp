@@ -13,7 +13,7 @@
 
 <div id="main">
 
-    <p id="username">${username} is currently logged in</p>
+    <p id="username">${customer.firstName} ${customer.lastName} is currently logged in</p>
 
     <div id="basicPanel">
         <h3>Your accounts</h3>
@@ -28,7 +28,7 @@
                     <td>${custAccount.accountId}</td>
                     <td>${custAccount.accountType}</td>
                     <td>${custAccount.balance}</td>
-                    <td><a href="Controller?accountid=${custAccount.accountId}&command=customerAccountHistory&username=${username}&userid=${userid}">Account history</a></td>
+                    <td><a href="Controller?accountid=${custAccount.accountId}&command=customerAccountHistory&username=${username}&custemail=${customer.email}">Account history</a></td>
                 </tr>
             </table>
         </c:forEach>

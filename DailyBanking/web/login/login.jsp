@@ -12,7 +12,7 @@
         <h1>Login:</h1><br>
         <form id="loginform" action="Controller">
             <input type="hidden" name="command" value="login"/>
-            <p>Username: <input type="email" name="username" required/></p>
+            <p>Username: <input type="email" name="custemail" required/></p>
             <p>Password: <input type="password" name="password" required/></p>
             <p><input type="submit" value="login"/></p>
             <p style="color: red">${loginerror}</p>

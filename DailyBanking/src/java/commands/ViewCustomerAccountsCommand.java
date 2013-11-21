@@ -28,9 +28,8 @@ public class ViewCustomerAccountsCommand extends TargetCommand{
     }
     @Override
     public String execute(HttpServletRequest request) {
-        String idAsstr= request.getParameter("userid");
-        long id = Long.parseLong(idAsstr);
-        CustomerDTO cust = Factory.getInstance().getBankController().getCustomer(id);
+        String idAsstr= request.getParameter("custemail");
+        CustomerDTO cust = Factory.getInstance().getBankController().getCustomerByEmail(idAsstr);
         request.setAttribute("customer", cust);
         Collection<AccountDTO> custAccounts = cust.getAccounts();
         request.setAttribute("custAccounts", custAccounts);

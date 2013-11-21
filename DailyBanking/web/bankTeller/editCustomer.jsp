@@ -17,7 +17,7 @@
             <label>Email:</label><br>
             <input type="text" name="newEmail" id="newEmail" value="${customer.email}"><br>
             <input type="submit" name="submit">
-            <input type="hidden" name="custid" value="${customer.customerId}">
+            <input type="hidden" name="custemail" value="${customer.email}">
             <input type="hidden" name="command" value="comitEditCustomer">
         </form>
     </div>

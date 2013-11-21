@@ -22,9 +22,8 @@ public class AddAccountCommand extends TargetCommand{
     
     @Override
     public String execute(HttpServletRequest request){
-        String idAsString = request.getParameter("custid");
-        Long id = Long.parseLong(idAsString);
-        CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomer(id);
+        String idAsString = request.getParameter("custemail");
+        CustomerDTO cust = servlets.Factory.getInstance().getBankController().getCustomerByEmail(idAsString);
         request.setAttribute("customer", cust);
         return super.execute(request);
     }
