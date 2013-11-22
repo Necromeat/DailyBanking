@@ -58,7 +58,7 @@ public class BusinessDataBean implements BankDataInterface {
                     tempUseTransaction.add(df);
                 }
             }
-           tempDTOAccount.setTransactions(tempTransaction);
+           tempDTOAccount.setTransactions(tempUseTransaction);
            tempAccountDTO.add(tempDTOAccount);
            
         }
@@ -82,7 +82,7 @@ public class BusinessDataBean implements BankDataInterface {
         AccountDTO tempAccountDTO = new AccountDTO(accounttype.getAccountId(),accounttemp.getAccountType().getAccountType(),accounttemp.getBalance());
         
         
-    return tempAccountDTO;
+          return tempAccountDTO;
     }
 
     
@@ -90,37 +90,39 @@ public class BusinessDataBean implements BankDataInterface {
     
     @Override
     public Collection<AccountDTO> getAccounts() {
-    Collection<AccountDetail> tempDetails;
-    Collection<AccountTransaction> tempTrans;
-    
-    Query queryAccountTans = em.createNamedQuery("AccountTransaction.findAll");
-    tempTrans=queryAccountTans.getResultList();
-    Collection<AccountDTO> outDTO = null;
-    
-    Query query = em.createNamedQuery("AccountDetail.findAll");
-    tempDetails = query.getResultList();
+
+    List<Transaction> tempTransaction = getTransactions();
+    Collection<AccountDTO> accountDTOOut = new ArrayList();
     
     
+    Query queryDetails = em.createNamedQuery("AccountDetail.findAll");
+    Query quertCustomerDetail =  em.createNamedQuery("CustomerDetail.findAll");
     
-        for (AccountDetail ad: tempDetails) {
-            AccountDTO tempAccountDTO = new AccountDTO(ad.getAccountType().getAccountId(),getAccount(ad.getAccountType().getAccountId()).getAccountType(),ad.getBalance());
+    Collection<AccountDetail> tempDetails =queryDetails .getResultList();
+    Collection<CustomerDetail> tempCustomer=quertCustomerDetail.getResultList();
+    
+    
+    for (AccountDetail f:tempDetails) {
+           AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),f.getBalance());
+           List<Transaction>temp = new ArrayList();
+           for (Transaction at:tempTransaction) {
+             if(f.getAccountDetailPK().getAccountId() == at.getUserid()){
+              temp.add(at);
+             }
              
-           Query queryCustomer = em.createNamedQuery("CustomerDetail.findByUserId");
-            queryCustomer.setParameter("userId", ad.getUsers().getUserId());
-                CustomerDetail tempCustomer = (CustomerDetail)query.getSingleResult();
-             CustomerDTO tempCustomerDTO = new CustomerDTO(tempCustomer.getUserId(),tempCustomer.getFname(),tempCustomer.getLname(),tempCustomer.getUserEmail());
-   
-            tempAccountDTO.setOwner(tempCustomerDTO);
-            
-            List<Transaction> transaction=new ArrayList();
-            
-            
+           }
+        tempDTOAccount.setTransactions(temp);
         
-            tempAccountDTO.setTransactions(transaction);
-            outDTO.add(tempAccountDTO);
-        }
-    
-        return outDTO;
+           for (CustomerDetail cd :tempCustomer){
+               if(f.getAccountDetailPK().getAccountId() == cd.getUserId()){
+                CustomerDTO tempCustomerDTO = new CustomerDTO(cd.getUserId(),cd.getFname(),cd.getLname(),cd.getUserEmail());
+                tempDTOAccount.setOwner(tempCustomerDTO);
+               }
+         }  
+           
+            accountDTOOut.add(tempDTOAccount);
+             }
+    return accountDTOOut;
     }
 
     @Override
@@ -145,9 +147,14 @@ public class BusinessDataBean implements BankDataInterface {
 
     @Override
     public UserDTO getUser(String email) {
-        Users tempUser = em.find(Users.class, email);
+        Query query = em.createNamedQuery("Users.findByUserEmail");
+        query.setParameter("userEmail", email);
+        Users tempUser = (Users)query.getSingleResult();
         UserDTO temp = new UserDTO();
         temp.setEmail(email);
+        temp.setId(tempUser.getUserId());
+        temp.setPw(tempUser.getUserPw());
+        
         return temp;
         
         
@@ -161,7 +168,8 @@ public class BusinessDataBean implements BankDataInterface {
         tempTrans = query.getResultList();
         
         for (AccountTransaction d: tempTrans) {
-            Trans.add(new Transaction(d.getAccountId().getAccountId(),d.getTransactionId(),d.getAmount(),d.getMessage()));
+            long temp =d.getAccountId().getAccountId();
+            Trans.add(new Transaction(temp,d.getTransactionId(),d.getAmount(),d.getMessage()));
         }
         
         
