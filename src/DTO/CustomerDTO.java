@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Lars Mortensen
+ * @author Andrew
  */
 public class CustomerDTO implements Serializable {
   private long customerId;

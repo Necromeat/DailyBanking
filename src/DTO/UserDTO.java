@@ -11,38 +11,28 @@ import java.io.Serializable;
  * @author Andrew
  */
 public class UserDTO implements Serializable {
-    private String fname;
-    private String lname;
+    private String pw;
     private String email;
     private long id;
 
-    public UserDTO(String fname, String lname, String email, long id) {
-        this.fname = fname;
-        this.lname = lname;
+    public UserDTO(String email, long id,String pw) {
         this.email = email;
         this.id = id;
+        this.pw = pw;
     }
 
     public UserDTO() {
     }
 
-    public String getUserFname() {
-        return fname;
+    public String getPw() {
+        return pw;
     }
 
-    public void setUserFname(String fname) {
-        this.fname = fname;
+    public void setPw(String pw) {
+        this.pw = pw;
     }
 
-    public String getUserLname() {
-        return lname;
-    }
-
-    public void setUserLname(String lname) {
-        this.lname = lname;
-    }
-
-    public String getUserEmail() {
+    public String getEmail() {
         return email;
     }
 
@@ -54,6 +44,11 @@ public class UserDTO implements Serializable {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    
     
     
     

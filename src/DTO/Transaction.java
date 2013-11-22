@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Lars Mortensen
+ * @author Andrew
  */
 public class Transaction implements Serializable {
   private long transactionId;

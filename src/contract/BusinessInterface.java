@@ -66,6 +66,10 @@ public interface BusinessInterface {
     void setEmail(String email);
     void setFirstName(String firstName);
     void setLastName(String lastName);    
+    
+    /*Users aka bankteller*/
+    
+    UserDTO getUser(String email);
   
     
     /*All*/
