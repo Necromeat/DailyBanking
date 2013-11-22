@@ -1,8 +1,11 @@
 
 package commands;
 
+import DTO.AccountDTO;
+import DTO.CustomerDTO;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
+import servlets.Factory;
 
 /**
  *
@@ -16,6 +19,11 @@ public class CustomerIndexCommand extends TargetCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
+       String idAsstr= request.getParameter("custemail");
+       CustomerDTO customer = Factory.getInstance().getBankController().getCustomerByEmail(idAsstr);
+        request.setAttribute("customer", customer);
+        
+        
         return super.execute(request); 
     }
 

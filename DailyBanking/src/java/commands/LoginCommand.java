@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
 import servlets.Factory;
-import shared.Customer;
 
 /**
  *
@@ -59,7 +58,7 @@ public class LoginCommand implements Command {
                         
                         UserDTO user = Factory.getInstance().getBankController().getUser(username);
                         request.setAttribute("userid", user.getId());
-                        request.setAttribute("username", user.getUserFname());
+                        request.setAttribute("username", user.getEmail());
                     }
                     break;
                 }

@@ -11,14 +11,14 @@
 
     <div id="basicPanel">
         <h3>Account History for: </h3>
-        <h3>${account.accountType}&nbsp; - Account number: &nbsp;${account.accountId}</h3>
+        <h3></h3>
         <%--<h3>Account Owner:&nbsp${account.owner.firstName}&nbsp${account.owner.lastName}</h3>
         <a href="Controller?accountid=${account.accountId}&command=viewAccount">Account Details</a>--%> 
     </div>
 
     <div id="basicPanel">
         <table>
-            <caption>${account.accountType}&nbsp;-&nbsp;${account.accountId}</caption>
+            <caption>${customer.firstName}&nbsp;-&nbsp;</caption>
             <thead>
                 <tr><th>Date</th><th>Description</th><th>Amount</th><th>Balance</th></tr>
             </thead>
@@ -35,7 +35,7 @@
         </table>
     </div>
             <div id="basicPanel">
-        <a href="Controller?&accountid=${account.accountId}&username=${username}&userid=${userid}&command=customerAddTransfer">Make Transfer</a>
+        <%--<a href="Controller?&accountid=${account.accountId}&username=${username}&userid=${userid}&command=customerAddTransfer">Make Transfer</a>--%>
     </div>
 
 </div>

@@ -1,8 +1,10 @@
 
 package commands;
 
+import DTO.UserDTO;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
+import servlets.Factory;
 
 /**
  *
@@ -16,6 +18,11 @@ public class BankTellerIndexCommand extends TargetCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
+         String idAsstr= request.getParameter("custemail");
+        UserDTO user = Factory.getInstance().getBankController().getUser(idAsstr);
+        request.setAttribute("user", user);   
+        
+        
         return super.execute(request);
     }
     
