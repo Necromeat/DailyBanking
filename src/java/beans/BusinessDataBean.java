@@ -48,11 +48,19 @@ SessionContext ctx;
     
     public void addCustomer(CustomerDTO customer) {
     CustomerDetail customerTemp = new CustomerDetail();
+    Query query = em.createNamedQuery("Users.findByUserEmail");
+    query.setParameter("userEmail", customer.getEmail());
+    Users user = (Users)query.getSingleResult();
     customerTemp.setFname(customer.getFirstName());
     customerTemp.setLname(customer.getLastName());
     customerTemp.setUserEmail(customer.getEmail());
-          em.persist(customerTemp);
+    customerTemp.setUserId(user.getUserId());
+    UserGroups ug = new UserGroups();
+    ug.setUserId(user.getUserId());
+    ug.setUserRoll("Customers");
     
+          em.persist(customerTemp);
+    em.persist(ug);
     }
 
     
