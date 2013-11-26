@@ -51,16 +51,22 @@ SessionContext ctx;
     Query query = em.createNamedQuery("Users.findByUserEmail");
     query.setParameter("userEmail", customer.getEmail());
     Users user = (Users)query.getSingleResult();
+    
+    UserGroupsPK userPK = new UserGroupsPK();
+    
     customerTemp.setFname(customer.getFirstName());
     customerTemp.setLname(customer.getLastName());
     customerTemp.setUserEmail(customer.getEmail());
     customerTemp.setUserId(user.getUserId());
+    customerTemp.setUsers(user);    
+    userPK.setUserEmail(customer.getEmail());
+    userPK.setUserRoll("Customers");
     UserGroups ug = new UserGroups();
-    ug.setUserEmail(customer.getEmail());
-    ug.setUserRoll("Customers");
+    ug.setUserGroupsPK(userPK);
     
-          em.persist(customerTemp);
-    em.persist(ug);
+     em.persist(ug);
+     em.persist(customerTemp);
+   
     }
 
     @Override
