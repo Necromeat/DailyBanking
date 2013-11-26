@@ -55,7 +55,18 @@ SessionContext ctx;
     
     }
 
-    
+    @Override
+    public boolean checkUserEmail(String email){
+        try{
+            Query query = em.createNamedQuery("CustomerDetail.findByUserEmail");
+            query.setParameter("userEmail", email);  
+            
+            return false;
+        }catch(Exception e){
+            System.out.println(e);
+            return true;
+        }
+    }
 
     @Override
     public CustomerDTO getCustomerByEmail(String email) {
