@@ -10,7 +10,7 @@
                 dataType: "text",
                 success: dateReady
             });
-        })
+        });
     });
 
     function dateReady(data) {
@@ -30,7 +30,7 @@
             <tr>
                 <td>${account.accountId}</td>
                 <td>${account.accountType}</td>
-                <td>${account.owner.firstName} ${account.owner.lastName}</td>
+                <td>${account.owner.email}</td>
                 <td><a href="Controller?accountid=${account.accountId}&command=viewAccount">Account details</a></td>
             </tr>
         </c:forEach>
