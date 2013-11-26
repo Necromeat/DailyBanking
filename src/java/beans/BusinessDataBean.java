@@ -12,9 +12,7 @@ import contract.BankDataInterface;
 import entities.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.security.DeclareRoles;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -50,8 +48,10 @@ SessionContext ctx;
     
     public void addCustomer(CustomerDTO customer) {
     CustomerDetail customerTemp = new CustomerDetail();
-    
-          
+    customerTemp.setFname(customer.getFirstName());
+    customerTemp.setLname(customer.getLastName());
+    customerTemp.setUserEmail(customer.getEmail());
+          em.persist(customerTemp);
     
     }
 

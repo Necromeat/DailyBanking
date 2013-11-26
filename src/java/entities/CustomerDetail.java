@@ -9,11 +9,14 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -39,6 +42,9 @@ public class CustomerDetail implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "USER_ID")
+    
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="seq1",sequenceName= "seq_customer_id")
     private long userId;
     @Size(max = 50)
     @Column(name = "USER_EMAIL")
