@@ -15,24 +15,42 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.security.DeclareRoles;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import Utils.*;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 /**
  *
  * @author Andrew
  */
+
+
 @Stateless
 @Remote
+
+
+@DeclareRoles({"Customers","BankTellers"})
+
 public class BusinessDataBean implements BankDataInterface {
     @PersistenceContext(unitName = "DailyBankingBusinessDataBasePU")
     private EntityManager em;
+    
+@Resource
+SessionContext ctx;
     @Override
     
     public void addCustomer(CustomerDTO customer) {
-
+    CustomerDetail customerTemp = new CustomerDetail();
+    
           
     
     }
@@ -63,9 +81,7 @@ public class BusinessDataBean implements BankDataInterface {
            
         }
         
-  
-        
-        
+      
         
         
         temp2.setAccounts(tempAccountDTO);
@@ -132,7 +148,15 @@ public class BusinessDataBean implements BankDataInterface {
 
     @Override
     public void addAccount(Long custID, AccountDTO account) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AccountType tempType = new AccountType();
+        AccountDetail tempDetail = new AccountDetail();
+        AccountDetailPK detailPk = new AccountDetailPK();
+        tempType.setAccountType(account.getAccountType());
+        detailPk.setUserId(custID);
+        
+        em.persist(tempType);
+        
+        tempDetail.setBalance(account.getBalance());
     }
 
     @Override
@@ -177,5 +201,25 @@ public class BusinessDataBean implements BankDataInterface {
         return Trans;
     }
 
+    @Override
+    public void addUser(String pw, String Email){
+        Users user = new Users();
+        try {
+            user.setUserPw(Utils.PasswordDigestGenerator.getEncoded(pw));
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(BusinessDataBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(BusinessDataBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        user.setUserEmail(Email);
+        
+        em.persist(user);
+        
+    }
+    
+   public CustomerDTO getCustomerByPrincipal(){
+       
+       return null;
+   }
     
 }
