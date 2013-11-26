@@ -8,7 +8,6 @@ import DTO.AccountDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,12 +43,13 @@ public class ViewAllAccountsServlet extends HttpServlet {
             out.println("<tr><th>Account ID</th><th>Account Type</th><th>Account Owner</th></tr>");
             
             for(AccountDTO a : accounts){
+                out.println("<tr>");
                 out.println("<td>"+a.getAccountId()+"</td>");
-                out.println("<td>"+a.getAccountType()+"</td>");
-                out.println("<td>"+"-"+a.getOwner().getFirstName()+" "+a.getOwner().getLastName()+"</td>");
-                out.println("<td><a href=\"Controller?accountid="+a.getAccountId()+"&command=viewAccount\">"+"Account details"+"</a></td>");
+                out.println("<td>"+a.getAccountType()+"</td>");                
+                out.println("<td>"+a.getOwner().getEmail()+"</td>");
+                out.println("</tr>");
+                
             }
-              out.println("</tr>\n</c:forEach>\n</table>");  
            
         } finally {
             out.close();
