@@ -45,8 +45,8 @@ public class Users implements Serializable {
     @NotNull
     @Column(name = "USER_ID")
     
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name="seq1",sequenceName= "seq_customer_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq1")
     private long userId;
     @Size(max = 50)
     @Column(name = "USER_EMAIL")
