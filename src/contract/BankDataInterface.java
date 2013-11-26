@@ -28,8 +28,7 @@ public interface BankDataInterface {
     
     //BankTellers
      UserDTO getUser(String email);
-
-     
+     void addUser(String pw, String Email);
     
     
 }
