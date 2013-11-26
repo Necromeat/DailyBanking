@@ -26,6 +26,8 @@
         <a href="Controller?accountid=${account.accountId}&command=accountHistory">View Transaction's</a>
         
         <a href="Controller?accountid=${account.accountId}&command=createTransfer">Make Transfer</a>
+        
+        
     </div>
 
 </div>   
