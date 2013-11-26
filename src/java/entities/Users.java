@@ -5,20 +5,16 @@
 package entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -44,11 +40,10 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "USER_ID")
-    
-    @SequenceGenerator(name="seq1",sequenceName= "seq_customer_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq1")
     private long userId;
-    @Size(max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "USER_EMAIL")
     private String userEmail;
     @Size(max = 100)
@@ -59,8 +54,6 @@ public class Users implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
     private Collection<AccountDetail> accountDetailCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "users")
-    private UserGroups userGroups;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "users")
     private EmployeeDetail employeeDetail;
 
     public Users() {
@@ -68,6 +61,11 @@ public class Users implements Serializable {
 
     public Users(long userId) {
         this.userId = userId;
+    }
+
+    public Users(long userId, String userEmail) {
+        this.userId = userId;
+        this.userEmail = userEmail;
     }
 
     public long getUserId() {
@@ -109,14 +107,6 @@ public class Users implements Serializable {
 
     public void setAccountDetailCollection(Collection<AccountDetail> accountDetailCollection) {
         this.accountDetailCollection = accountDetailCollection;
-    }
-
-    public UserGroups getUserGroups() {
-        return userGroups;
-    }
-
-    public void setUserGroups(UserGroups userGroups) {
-        this.userGroups = userGroups;
     }
 
     public EmployeeDetail getEmployeeDetail() {

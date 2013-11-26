@@ -5,7 +5,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +43,7 @@ public class AccountTransaction implements Serializable {
     @Column(name = "TYPE_OF")
     private String typeOf;
     @Column(name = "AMOUNT")
-    private double amount;
+    private long amount;
     @Size(max = 50)
     @Column(name = "MESSAGE")
     private String message;
@@ -75,11 +74,11 @@ public class AccountTransaction implements Serializable {
         this.typeOf = typeOf;
     }
 
-    public double getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 

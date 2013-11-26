@@ -56,7 +56,7 @@ SessionContext ctx;
     customerTemp.setUserEmail(customer.getEmail());
     customerTemp.setUserId(user.getUserId());
     UserGroups ug = new UserGroups();
-    ug.setUserId(user.getUserId());
+    ug.setUserEmail(customer.getEmail());
     ug.setUserRoll("Customers");
     
           em.persist(customerTemp);
