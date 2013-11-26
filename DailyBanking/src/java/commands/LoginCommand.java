@@ -42,15 +42,8 @@ public class LoginCommand implements Command {
             //This performs a programatic login
             System.out.println("about to log in");
             
-            String pas = "";
-            try {
-                pas = utils.PasswordDigestGenerator.getEncoded(password);
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(LoginCommand.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(LoginCommand.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            request.login(username, pas);
+         
+            request.login(username, password);
             System.out.println("just logged in");
             //Set next page depending on the users role
             for (SecurityRole role : roleToTarget.keySet()) {
