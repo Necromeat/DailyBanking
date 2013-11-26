@@ -41,10 +41,10 @@
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>file</realm-name>
+        <realm-name>BankSecureRealm</realm-name>
         <form-login-config>
-            <form-login-page>/all/main.jsp</form-login-page>
-            <form-error-page>/all/main.jsp</form-error-page>
+            <form-login-page>/login/login.jsp</form-login-page>
+            <form-error-page>/login/login.jsp</form-error-page>
         </form-login-config>
     </login-config>
     <security-role>

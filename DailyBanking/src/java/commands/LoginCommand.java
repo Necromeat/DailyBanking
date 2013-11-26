@@ -3,6 +3,8 @@ package commands;
 
 import DTO.CustomerDTO;
 import DTO.UserDTO;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import security.SecurityRole;
 import servlets.Factory;
+import utils.*;
 
 /**
  *
@@ -30,13 +33,24 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         String username = request.getParameter("custemail");
         String password = request.getParameter("password");
+        
+        
         //If something smart = bankteller. create BankTellerDTO
         
         String nextPage = loginFailed;
         try {
             //This performs a programatic login
             System.out.println("about to log in");
-            request.login(username, password);
+            
+            String pas = "";
+            try {
+                pas = utils.PasswordDigestGenerator.getEncoded(password);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(LoginCommand.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(LoginCommand.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            request.login(username, pas);
             System.out.println("just logged in");
             //Set next page depending on the users role
             for (SecurityRole role : roleToTarget.keySet()) {
