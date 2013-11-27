@@ -95,23 +95,14 @@ SessionContext ctx;
         Query queryAccounts = em.createNamedQuery("AccountDetail.findAll");
         Collection<AccountDetail> tempAccounts= queryAccounts.getResultList();
         List<AccountDTO> tempAccountDTO = new ArrayList();
-        List<Transaction> tempTransaction = getTransactions();
-        List<Transaction> tempUseTransaction= new ArrayList();
+        
         for (AccountDetail f:tempAccounts) {
            AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),f.getBalance());
            tempDTOAccount.setOwner(temp2);    
-            for (Transaction df:tempTransaction) {
-                if(df.getUserid()==tempDTOAccount.getAccountId()){
-                    tempUseTransaction.add(df);
-                }
-            }
-           tempDTOAccount.setTransactions(tempUseTransaction);
+           tempDTOAccount.setTransactions(getTransactions(f.getAccountDetailPK().getAccountId()));
            tempAccountDTO.add(tempDTOAccount);
            
-        }
-        
-      
-        
+        }        
         
         temp2.setAccounts(tempAccountDTO);
         return temp2;
@@ -129,6 +120,7 @@ SessionContext ctx;
         accounttype.setAccountId(accounttemp.getAccountDetailPK().getAccountId());
         accounttype.setUserId(accounttemp.getAccountDetailPK().getAccountId());
         AccountDTO tempAccountDTO = new AccountDTO(accounttype.getAccountId(),accounttemp.getAccountType().getAccountType(),accounttemp.getBalance());
+        tempAccountDTO.setTransactions(getTransactions(accounttype.getAccountId()));
         
         
           return tempAccountDTO;
@@ -140,7 +132,6 @@ SessionContext ctx;
     @Override
     public Collection<AccountDTO> getAccounts() {
 
-    List<Transaction> tempTransaction = getTransactions();
     Collection<AccountDTO> accountDTOOut = new ArrayList();
     
     
@@ -153,14 +144,7 @@ SessionContext ctx;
     
     for (AccountDetail f:tempDetails) {
            AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),f.getBalance());
-           List<Transaction>temp = new ArrayList();
-           for (Transaction at:tempTransaction) {
-             if(f.getAccountDetailPK().getAccountId() == at.getUserid()){
-              temp.add(at);
-             }
-             
-           }
-        tempDTOAccount.setTransactions(temp);
+           tempDTOAccount.setTransactions(getTransactions(f.getAccountDetailPK().getAccountId()));
         
            for (CustomerDetail cd :tempCustomer){
                if(f.getUsers().getUserEmail().equals(cd.getUserEmail())){
@@ -218,15 +202,17 @@ SessionContext ctx;
     }
 
        
-    private List<Transaction> getTransactions(){
-       List<AccountTransaction> tempTrans;
+    private List<Transaction> getTransactions(long accountid){
+       List<AccountTransaction> tempTrans = null;
        List<Transaction> Trans = new ArrayList();
-        Query query = em.createNamedQuery("AccountTransaction.findAll");        
+        Query query = em.createNamedQuery("AccountTransaction.findByAccountId"); 
+        query.setParameter("accountId", accountid);
         tempTrans = query.getResultList();
         
+        
         for (AccountTransaction d: tempTrans) {
-            long temp =d.getAccountId().getAccountId();
-            Trans.add(new Transaction(temp,d.getTransactionId(),d.getAmount(),d.getMessage()));
+            Trans.add(new Transaction(d.getAccountTransactionPK().getAccountId(),d.getAccountTransactionPK().getTransactionId(),d.getAmount(),d.getMessage()));
+            
         }
         
         
