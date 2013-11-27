@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
+import javax.persistence.TemporalType;
 /**
  *
  * @author Andrew
@@ -75,7 +76,6 @@ SessionContext ctx;
         try{
             Query query = em.createNamedQuery("CustomerDetail.findByUserEmail");
             query.setParameter("userEmail", email);  
-            CustomerDetail tempUser = (CustomerDetail)query.getSingleResult();
             System.out.println("successfull try! should return false!");
             result = "false";
         }catch(Exception e){
@@ -121,7 +121,11 @@ SessionContext ctx;
         accounttype.setUserId(accounttemp.getAccountDetailPK().getAccountId());
         AccountDTO tempAccountDTO = new AccountDTO(accounttype.getAccountId(),accounttemp.getAccountType().getAccountType(),accounttemp.getBalance());
         tempAccountDTO.setTransactions(getTransactions(accounttype.getAccountId()));
-        
+        Query customerQ = em.createNamedQuery("findByUserId");
+        customerQ.setParameter("userId", accounttype.getUserId());
+        CustomerDetail customerTemp = (CustomerDetail)customerQ.getSingleResult();
+        CustomerDTO tempCustomer = new CustomerDTO(customerTemp.getUserId(),customerTemp.getFname(),customerTemp.getLname(),customerTemp.getUserEmail());
+        tempAccountDTO.setOwner(tempCustomer);
         
           return tempAccountDTO;
     }
@@ -147,7 +151,7 @@ SessionContext ctx;
            tempDTOAccount.setTransactions(getTransactions(f.getAccountDetailPK().getAccountId()));
         
            for (CustomerDetail cd :tempCustomer){
-               if(f.getUsers().getUserEmail().equals(cd.getUserEmail())){
+               if(f.getAccountDetailPK().getUserId() == cd.getUserId()){
                 CustomerDTO tempCustomerDTO = new CustomerDTO(cd.getUserId(),cd.getFname(),cd.getLname(),cd.getUserEmail());
                 tempDTOAccount.setOwner(tempCustomerDTO);
                }
