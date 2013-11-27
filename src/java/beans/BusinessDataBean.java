@@ -19,7 +19,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import Utils.*;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -50,8 +49,7 @@ SessionContext ctx;
     CustomerDetail customerTemp = new CustomerDetail();
     Query query = em.createNamedQuery("Users.findByUserEmail");
     query.setParameter("userEmail", customer.getEmail());
-    Users user = (Users)query.getSingleResult();
-    
+    Users user = (Users)query.getSingleResult();    
     UserGroupsPK userPK = new UserGroupsPK();
     
     customerTemp.setFname(customer.getFirstName());
@@ -59,6 +57,7 @@ SessionContext ctx;
     customerTemp.setUserEmail(customer.getEmail());
     customerTemp.setUserId(user.getUserId());
     customerTemp.setUsers(user);    
+    
     userPK.setUserEmail(customer.getEmail());
     userPK.setUserRoll("Customers");
     UserGroups ug = new UserGroups();
@@ -122,9 +121,13 @@ SessionContext ctx;
     
     @Override
     public AccountDTO getAccount(long id) {
+        Query query = em.createNamedQuery("AccountDetail.findByAccountId");
+        query.setParameter("accountId", id);
+        AccountDetail accounttemp= (AccountDetail)query.getSingleResult();
         
-        AccountDetail accounttemp= em.find(AccountDetail.class, id);
-        AccountDetailPK accounttype = em.find(AccountDetailPK.class, accounttemp.getUsers().getUserId());
+        AccountDetailPK accounttype = new AccountDetailPK();
+        accounttype.setAccountId(accounttemp.getAccountDetailPK().getAccountId());
+        accounttype.setUserId(accounttemp.getAccountDetailPK().getAccountId());
         AccountDTO tempAccountDTO = new AccountDTO(accounttype.getAccountId(),accounttemp.getAccountType().getAccountType(),accounttemp.getBalance());
         
         
@@ -160,7 +163,7 @@ SessionContext ctx;
         tempDTOAccount.setTransactions(temp);
         
            for (CustomerDetail cd :tempCustomer){
-               if(f.getAccountDetailPK().getAccountId() == cd.getUserId()){
+               if(f.getUsers().getUserEmail().equals(cd.getUserEmail())){
                 CustomerDTO tempCustomerDTO = new CustomerDTO(cd.getUserId(),cd.getFname(),cd.getLname(),cd.getUserEmail());
                 tempDTOAccount.setOwner(tempCustomerDTO);
                }
