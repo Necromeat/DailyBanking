@@ -70,16 +70,21 @@ SessionContext ctx;
     }
 
     @Override
-    public boolean checkUserEmail(String email){
+    public String checkUserEmail(String email){
+        System.out.println("CheckUSerEmail method working");
+        String result;
         try{
             Query query = em.createNamedQuery("CustomerDetail.findByUserEmail");
             query.setParameter("userEmail", email);  
-            
-            return false;
+            CustomerDetail tempUser = (CustomerDetail)query.getSingleResult();
+            System.out.println("successfull try! should return false!");
+            result = "false";
         }catch(Exception e){
             System.out.println(e);
-            return true;
+            System.out.println("exception caught! should return true!");
+            result = "true";
         }
+        return result;
     }
 
     @Override
