@@ -18,6 +18,7 @@ import javax.ejb.Remote;
 public interface BankDataInterface {
    
     void addCustomer(CustomerDTO customer);
+    String checkUserEmail(String email);
     CustomerDTO getCustomerByEmail(String email);
     AccountDTO getAccount(long id);
     Collection<AccountDTO> getAccounts();
