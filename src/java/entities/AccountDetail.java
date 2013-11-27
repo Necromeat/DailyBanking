@@ -5,7 +5,6 @@
 package entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -49,7 +48,7 @@ public class AccountDetail implements Serializable {
         this.accountDetailPK = accountDetailPK;
     }
 
-    public AccountDetail(long accountId,long userId) {
+    public AccountDetail(long accountId, long userId) {
         this.accountDetailPK = new AccountDetailPK(accountId, userId);
     }
 

@@ -44,7 +44,7 @@ public class AccountType implements Serializable {
     private String accountType;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountType")
     private Collection<AccountDetail> accountDetailCollection;
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountType")
     private Collection<AccountTransaction> accountTransactionCollection;
 
     public AccountType() {
