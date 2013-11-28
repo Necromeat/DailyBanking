@@ -190,12 +190,37 @@ SessionContext ctx;
 
     @Override
     public void newTransfer(long custID, long fromID, long toID, double amount, String message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+       AccountTransaction from = new AccountTransaction(); 
+       AccountTransaction to  = new AccountTransaction(); 
+       AccountTransactionPK apk = new AccountTransactionPK();
+        AccountDTO accountFrom = getAccount(fromID);
+            accountFrom.createTransaction(custID, toID, -amount, message);
+        AccountDTO accountTo = getAccount(toID);
+            accountTo.createTransaction(custID, toID, amount, message);
+           
+       from.setAmount(accountFrom.getBalance());
+       apk.setAccountId(accountFrom.getAccountId());
+       from.setAccountTransactionPK(apk);
+       from.setTypeOf("Fudge");
+       from.setMessage(message);
+       em.persist(from);       
+       to.setAmount(accountTo.getBalance());
+       apk.setAccountId(accountTo.getAccountId());
+       to.setAccountTransactionPK(apk);
+       to.setTypeOf("Fudge");
+       to.setMessage(message);
+       em.persist(to);
     }
 
     @Override
     public void saveEditedCustomer(CustomerDTO cust, CustomerDTO temp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    CustomerDetail tempDetail = em.find(CustomerDetail.class, cust.getCustomerId());
+    tempDetail.setFname(temp.getFirstName());
+    tempDetail.setLname(temp.getLastName());
+    tempDetail.setUserEmail(temp.getEmail());
+    em.persist(tempDetail);
+    
     }
 
     @Override
