@@ -164,7 +164,15 @@ SessionContext ctx;
 
     @Override
     public Collection<CustomerDTO> getCustomers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Query query = em.createNamedQuery("CustomerDetail.findAll");
+    Collection<CustomerDetail> tempDetail = query.getResultList();
+    Collection<CustomerDTO> tempDTO = new ArrayList();
+    
+        for (CustomerDetail d: tempDetail) {
+            CustomerDTO temp = new CustomerDTO(d.getUserId(),d.getFname(),d.getLname(),d.getUserEmail());
+            tempDTO.add(temp);
+        }
+        return tempDTO;
     }
 
     @Override
