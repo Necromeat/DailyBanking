@@ -10,11 +10,13 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,6 +42,8 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "USER_ID")
+    @GeneratedValue(generator="my_seq")
+    @SequenceGenerator(name="my_seq",sequenceName="seq_customer_id")
     private long userId;
     @Basic(optional = false)
     @NotNull

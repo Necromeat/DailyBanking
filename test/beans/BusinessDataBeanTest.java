@@ -37,13 +37,13 @@ public class BusinessDataBeanTest {
     }
     
     @BeforeClass
-    public void setUpClass() {
+    public static void setUpClass() {
        
         
     }
     
     @AfterClass
-    public  void tearDownClass() {
+    public static void tearDownClass() {
     }
     
     @Before
