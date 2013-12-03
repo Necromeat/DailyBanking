@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -42,8 +43,8 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "USER_ID")
-    @GeneratedValue(generator="my_seq")
-    @SequenceGenerator(name="my_seq",sequenceName="seq_customer_id")
+    @GeneratedValue(strategy = GenerationType.AUTO,generator="my_seq")
+    @SequenceGenerator(name="my_seq" ,sequenceName="seq_customer_id")
     private long userId;
     @Basic(optional = false)
     @NotNull

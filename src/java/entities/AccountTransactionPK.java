@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
@@ -26,7 +27,7 @@ public class AccountTransactionPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     
-    @GeneratedValue(generator="my_seq2")
+    @GeneratedValue(strategy = GenerationType.AUTO,generator="my_seq2")
     @SequenceGenerator(name="my_seq2",sequenceName="seq_transaction_id")
     @Column(name = "TRANSACTION_ID")
     private long transactionId;

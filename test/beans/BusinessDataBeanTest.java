@@ -9,11 +9,10 @@ package beans;
 import DTO.AccountDTO;
 import DTO.CustomerDTO;
 import DTO.UserDTO;
+import connection.DBConnection;
 import contract.BankDataInterface;
-import entities.AccountDetail;
-import entities.AccountDetailPK;
-import entities.CustomerDetail;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Collection;
 import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
@@ -28,30 +27,25 @@ import static org.junit.Assert.*;
  * @author Andrew
  */
 public class BusinessDataBeanTest {
-      
-         BusinessDataBean db;
-      private Collection<CustomerDTO> customerList;
-      private Collection<AccountDTO> accountDTOList;
+      private static Connection con;
         
     public BusinessDataBeanTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
-       
+    con = DBConnection.getInstance().getCurrentConnection();
         
     }
     
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() throws SQLException {
+        con.close();
     }
     
     @Before
     public void setUp() {
-        customerList = new ArrayList();
-        customerList = db.getCustomers();
-        accountDTOList = new ArrayList();
-        accountDTOList = db.getAccounts();
+        
     }
     
     @After

@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -40,7 +41,7 @@ public class AccountType implements Serializable {
     @Basic(optional = false)
     @NotNull
     
-    @GeneratedValue(generator="my_seq1")
+    @GeneratedValue(strategy = GenerationType.AUTO,generator="my_seq1")
     @SequenceGenerator(name="my_seq1",sequenceName="seq_account_id")
     @Column(name = "ACCOUNT_ID")
     private long accountId;
