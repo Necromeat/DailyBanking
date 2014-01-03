@@ -20,12 +20,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.io.UnsupportedEncodingException;
+import java.security.Identity;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.resource.ResourceException;
 /**
  *
  * @author Andrew
@@ -62,7 +67,7 @@ SessionContext ctx;
     customerTemp.setUsers(user);    
     
     userPK.setUserEmail(customer.getEmail());
-    userPK.setUserRoll("Customers");
+    userPK.setUserRoll("Customer");
     UserGroups ug = new UserGroups();
     ug.setUserGroupsPK(userPK);
     
@@ -276,10 +281,15 @@ SessionContext ctx;
 
     @Override
     public CustomerDTO getCustomer() {
-      callerPrincipal = ctx.getCallerPrincipal();
-      callerkey = callerPrincipal.getName();
-       System.out.println(callerkey);
-       return null;
+    CustomerDTO temp = null;
+        Principal callerPrincipal1 = ctx.getCallerPrincipal();
+        temp = getCustomerByEmail(""+callerPrincipal1);
+       return temp;
+    }
+
+    @Override
+    public int countCustomers() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
    
