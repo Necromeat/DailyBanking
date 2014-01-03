@@ -21,6 +21,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -43,6 +44,8 @@ public class BusinessDataBean implements BankDataInterface {
     
 @Resource
 SessionContext ctx;
+    private Principal callerPrincipal;
+    private String callerkey;
     @Override
     
     public void addCustomer(CustomerDTO customer) {
@@ -72,9 +75,12 @@ SessionContext ctx;
     public String checkUserEmail(String email){
         String result ="true";
         try{
-            Query query = em.createNamedQuery("CustomerDetail.findByUserEmail");
+            Query query = em.createNamedQuery("Users.findByUserEmail");
             query.setParameter("userEmail", email);
+            Users temp =(Users)query.getSingleResult();
+            if(temp.getUserEmail().equals(email)){                
             result = "false";
+            }
         }catch(Exception e){
         
         }
@@ -267,10 +273,15 @@ SessionContext ctx;
         em.persist(user);
         
     }
-    
-   public CustomerDTO getCustomerByPrincipal(){
-       
+
+    @Override
+    public CustomerDTO getCustomer() {
+      callerPrincipal = ctx.getCallerPrincipal();
+      callerkey = callerPrincipal.getName();
+       System.out.println(callerkey);
        return null;
-   }
+    }
+
+   
     
 }
