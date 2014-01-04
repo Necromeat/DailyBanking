@@ -27,10 +27,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.resource.ResourceException;
 /**
  *
  * @author Andrew
@@ -49,8 +45,6 @@ public class BusinessDataBean implements BankDataInterface {
     
 @Resource
 SessionContext ctx;
-    private Principal callerPrincipal;
-    private String callerkey;
     @Override
     
     public void addCustomer(CustomerDTO customer) {
@@ -77,14 +71,14 @@ SessionContext ctx;
     }
 
     @Override
-    public String checkUserEmail(String email){
-        String result ="true";
+    public boolean checkUserEmail(String email){
+        boolean result =true;
         try{
             Query query = em.createNamedQuery("Users.findByUserEmail");
             query.setParameter("userEmail", email);
             Users temp =(Users)query.getSingleResult();
             if(temp.getUserEmail().equals(email)){                
-            result = "false";
+            result = false;
             }
         }catch(Exception e){
         
