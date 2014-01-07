@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class CustomerDetail implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "USER_ID")
-    private long userId;
+    private BigInteger userId;
     @Size(max = 50)
     @Column(name = "FNAME")
     private String fname;
@@ -56,15 +57,16 @@ public class CustomerDetail implements Serializable {
     }
 
     public CustomerDetail(long userId) {
-        this.userId = userId;
+        this.userId = BigInteger.valueOf(userId);
     }
 
     public long getUserId() {
-        return userId;
+        String temp = ""+userId;
+        return Long.parseLong(temp);
     }
 
     public void setUserId(long userId) {
-        this.userId = userId;
+        this.userId = BigInteger.valueOf(userId);
     }
 
     public String getFname() {
@@ -99,25 +101,25 @@ public class CustomerDetail implements Serializable {
         this.users = users;
     }
 
-//    @Override
-//    public int hashCode() {
-//        int hash = 0;
-//        hash += (userId != null ? userId.hashCode() : 0);
-//        return hash;
-//    }
-//
-//    @Override
-//    public boolean equals(Object object) {
-//        // TODO: Warning - this method won't work in the case the id fields are not set
-//        if (!(object instanceof CustomerDetail)) {
-//            return false;
-//        }
-//        CustomerDetail other = (CustomerDetail) object;
-//        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
-//            return false;
-//        }
-//        return true;
-//    }
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (userId != null ? userId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof CustomerDetail)) {
+            return false;
+        }
+        CustomerDetail other = (CustomerDetail) object;
+        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public String toString() {

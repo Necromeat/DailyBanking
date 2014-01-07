@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -45,7 +46,7 @@ public class Users implements Serializable {
     @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.AUTO,generator="my_seq")
     @SequenceGenerator(name="my_seq" ,sequenceName="seq_customer_id")
-    private long userId;
+    private BigInteger userId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -65,20 +66,20 @@ public class Users implements Serializable {
     }
 
     public Users(long userId) {
-        this.userId = userId;
+        this.userId = converters.BigsToPrimatives.fromLongToBigInteger(userId);
     }
 
     public Users(long userId, String userEmail) {
-        this.userId = userId;
+        this.userId = converters.BigsToPrimatives.fromLongToBigInteger(userId);
         this.userEmail = userEmail;
     }
 
     public long getUserId() {
-        return userId;
+        return converters.BigsToPrimatives.fromBigIntToLong(userId);
     }
 
     public void setUserId(long userId) {
-        this.userId = userId;
+        this.userId = converters.BigsToPrimatives.fromLongToBigInteger(userId);
     }
 
     public String getUserEmail() {

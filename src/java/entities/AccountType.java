@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -44,7 +45,7 @@ public class AccountType implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO,generator="my_seq1")
     @SequenceGenerator(name="my_seq1",sequenceName="seq_account_id")
     @Column(name = "ACCOUNT_ID")
-    private long accountId;
+    private BigInteger accountId;
     @Size(max = 30)
     @Column(name = "ACCOUNT_TYPE")
     private String accountType;
@@ -57,15 +58,16 @@ public class AccountType implements Serializable {
     }
 
     public AccountType(long accountId) {
-        this.accountId = accountId;
+        this.accountId = BigInteger.valueOf(accountId);
     }
 
     public long getAccountId() {
-        return accountId;
+        String temp = ""+accountId;
+        return Long.parseLong(temp);
     }
 
     public void setAccountId(long accountId) {
-        this.accountId = accountId;
+        this.accountId = BigInteger.valueOf(accountId);
     }
 
     public String getAccountType() {
@@ -94,25 +96,25 @@ public class AccountType implements Serializable {
         this.accountTransactionCollection = accountTransactionCollection;
     }
 
-//    @Override
-//    public int hashCode() {
-//        int hash = 0;
-//        hash += (accountId != null ? accountId.hashCode() : 0);
-//        return hash;
-//    }
-//
-//    @Override
-//    public boolean equals(Object object) {
-//        // TODO: Warning - this method won't work in the case the id fields are not set
-//        if (!(object instanceof AccountType)) {
-//            return false;
-//        }
-//        AccountType other = (AccountType) object;
-//        if ((this.accountId == null && other.accountId != null) || (this.accountId != null && !this.accountId.equals(other.accountId))) {
-//            return false;
-//        }
-//        return true;
-//    }
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (accountId != null ? accountId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof AccountType)) {
+            return false;
+        }
+        AccountType other = (AccountType) object;
+        if ((this.accountId == null && other.accountId != null) || (this.accountId != null && !this.accountId.equals(other.accountId))) {
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public String toString() {

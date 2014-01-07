@@ -20,7 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.io.UnsupportedEncodingException;
-import java.security.Identity;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.util.logging.Level;
@@ -71,14 +71,14 @@ SessionContext ctx;
     }
 
     @Override
-    public boolean checkUserEmail(String email){
-        boolean result =true;
+    public String checkUserEmail(String email){
+        String result ="true";
         try{
             Query query = em.createNamedQuery("Users.findByUserEmail");
             query.setParameter("userEmail", email);
             Users temp =(Users)query.getSingleResult();
             if(temp.getUserEmail().equals(email)){                
-            result = false;
+            result = "false";
             }
         }catch(Exception e){
         
@@ -92,16 +92,19 @@ SessionContext ctx;
         query.setParameter("userEmail", email);        
         CustomerDetail tempUser=(CustomerDetail)query.getSingleResult();
         CustomerDTO temp2 = new CustomerDTO(tempUser.getUserId(),tempUser.getFname(),tempUser.getLname(),tempUser.getUserEmail());
-        Query queryAccounts = em.createNamedQuery("AccountDetail.findAll");
+        Query queryAccounts = em.createNamedQuery("AccountDetail.findByUserId");
+        queryAccounts.setParameter("userId", temp2.getCustomerId());
         Collection<AccountDetail> tempAccounts= queryAccounts.getResultList();
         List<AccountDTO> tempAccountDTO = new ArrayList();
+      
         
         for (AccountDetail f:tempAccounts) {
-           AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),f.getBalance());
+            
+           AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),convertFromBigDecimalToDouble(f.getBalance()));
            tempDTOAccount.setOwner(temp2);    
            tempDTOAccount.setTransactions(getTransactions(f.getAccountDetailPK().getAccountId()));
            tempAccountDTO.add(tempDTOAccount);
-           
+            
         }        
         
         temp2.setAccounts(tempAccountDTO);
@@ -119,7 +122,7 @@ SessionContext ctx;
         AccountDetailPK accounttype = new AccountDetailPK();
         accounttype.setAccountId(accounttemp.getAccountDetailPK().getAccountId());
         accounttype.setUserId(accounttemp.getAccountDetailPK().getAccountId());
-        AccountDTO tempAccountDTO = new AccountDTO(accounttype.getAccountId(),accounttemp.getAccountType().getAccountType(),accounttemp.getBalance());
+        AccountDTO tempAccountDTO = new AccountDTO(accounttype.getAccountId(),accounttemp.getAccountType().getAccountType(),convertFromBigDecimalToDouble(accounttemp.getBalance()));
         tempAccountDTO.setTransactions(getTransactions(accounttype.getAccountId()));
         Query customerQ = em.createNamedQuery("findByUserId");
         customerQ.setParameter("userId", accounttype.getUserId());
@@ -147,7 +150,7 @@ SessionContext ctx;
     
     
     for (AccountDetail f:tempDetails) {
-           AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),f.getBalance());
+           AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),convertFromBigDecimalToDouble(f.getBalance()));
            tempDTOAccount.setTransactions(getTransactions(f.getAccountDetailPK().getAccountId()));
         
            for (CustomerDetail cd :tempCustomer){
@@ -281,10 +284,13 @@ SessionContext ctx;
        return temp;
     }
 
-    @Override
-    public int countCustomers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   
+    private double convertFromBigDecimalToDouble(BigDecimal bd){
+        String temp = ""+bd;
+        return Double.parseDouble(temp);
     }
+
+  
 
    
     

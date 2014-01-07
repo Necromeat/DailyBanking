@@ -5,6 +5,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -33,7 +34,7 @@ public class AccountDetail implements Serializable {
     protected AccountDetailPK accountDetailPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "BALANCE")
-    private double balance;
+    private BigDecimal balance;
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Users users;
@@ -60,12 +61,13 @@ public class AccountDetail implements Serializable {
         this.accountDetailPK = accountDetailPK;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
     public void setBalance(double balance) {
-        this.balance = balance;
+        
+        this.balance = BigDecimal.valueOf(balance);
     }
 
     public Users getUsers() {

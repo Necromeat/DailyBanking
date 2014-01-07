@@ -40,7 +40,7 @@ public class AccountTransaction implements Serializable {
     private String typeOf;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "AMOUNT")
-    private double amount;
+    private BigDecimal amount;
     @Size(max = 50)
     @Column(name = "MESSAGE")
     private String message;
@@ -76,11 +76,14 @@ public class AccountTransaction implements Serializable {
     }
 
     public double getAmount() {
-        return amount;
+        String temp = ""+amount;
+        
+        return Double.parseDouble(temp);
     }
 
     public void setAmount(double amount) {
-        this.amount = amount;
+        
+        this.amount = BigDecimal.valueOf(amount);
     }
 
     public String getMessage() {
