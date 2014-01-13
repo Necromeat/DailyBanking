@@ -6,6 +6,7 @@
             <name>DailyBankingBusinessDataBase</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <included-library dirs="200">reference.BusinessContract.jar</included-library>
+            <included-library dirs="200">libs.restlib.classpath</included-library>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>

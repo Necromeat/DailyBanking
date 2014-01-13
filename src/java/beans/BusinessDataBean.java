@@ -14,18 +14,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
-import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.SessionContext;
 /**
  *
@@ -34,10 +33,7 @@ import javax.ejb.SessionContext;
 
 
 @Stateless
-@Remote
-
-
-@DeclareRoles({"Customers","BankTellers"})
+@DeclareRoles({"Customers","BankTellers","Customer","BankTeller"})
 
 public class BusinessDataBean implements BankDataInterface {
     @PersistenceContext(unitName = "DailyBankingBusinessDataBasePU")
@@ -46,7 +42,7 @@ public class BusinessDataBean implements BankDataInterface {
 @Resource
 SessionContext ctx;
     @Override
-    
+     @RolesAllowed({"BankTeller","BankTellers"})
     public void addCustomer(CustomerDTO customer) {
     CustomerDetail customerTemp = new CustomerDetail();
     Query query = em.createNamedQuery("Users.findByUserEmail");
@@ -71,6 +67,7 @@ SessionContext ctx;
     }
 
     @Override
+     @RolesAllowed({"BankTeller","BankTellers"})
     public String checkUserEmail(String email){
         String result ="true";
         try{
@@ -87,6 +84,7 @@ SessionContext ctx;
     }
 
     @Override
+     @RolesAllowed({"Customers","BankTellers","Customer","BankTeller"})
     public CustomerDTO getCustomerByEmail(String email) {
         Query query = em.createNamedQuery("CustomerDetail.findByUserEmail");
         query.setParameter("userEmail", email);        
@@ -100,7 +98,7 @@ SessionContext ctx;
         
         for (AccountDetail f:tempAccounts) {
             
-           AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),convertFromBigDecimalToDouble(f.getBalance()));
+           AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),converters.BigsToPrimatives.fromBigDecimalToDouble(f.getBalance()));
            tempDTOAccount.setOwner(temp2);    
            tempDTOAccount.setTransactions(getTransactions(f.getAccountDetailPK().getAccountId()));
            tempAccountDTO.add(tempDTOAccount);
@@ -114,6 +112,7 @@ SessionContext ctx;
     
     
     @Override
+      @RolesAllowed({"Customers","BankTellers","Customer","BankTeller"})
     public AccountDTO getAccount(long id) {
         Query query = em.createNamedQuery("AccountDetail.findByAccountId");
         query.setParameter("accountId", id);
@@ -122,7 +121,7 @@ SessionContext ctx;
         AccountDetailPK accounttype = new AccountDetailPK();
         accounttype.setAccountId(accounttemp.getAccountDetailPK().getAccountId());
         accounttype.setUserId(accounttemp.getAccountDetailPK().getAccountId());
-        AccountDTO tempAccountDTO = new AccountDTO(accounttype.getAccountId(),accounttemp.getAccountType().getAccountType(),convertFromBigDecimalToDouble(accounttemp.getBalance()));
+        AccountDTO tempAccountDTO = new AccountDTO(accounttype.getAccountId(),accounttemp.getAccountType().getAccountType(),converters.BigsToPrimatives.fromBigDecimalToDouble(accounttemp.getBalance()));
         tempAccountDTO.setTransactions(getTransactions(accounttype.getAccountId()));
         Query customerQ = em.createNamedQuery("findByUserId");
         customerQ.setParameter("userId", accounttype.getUserId());
@@ -137,6 +136,7 @@ SessionContext ctx;
     
     
     @Override
+    @RolesAllowed({"BankTeller","BankTellers"})
     public Collection<AccountDTO> getAccounts() {
 
     Collection<AccountDTO> accountDTOOut = new ArrayList();
@@ -150,7 +150,7 @@ SessionContext ctx;
     
     
     for (AccountDetail f:tempDetails) {
-           AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),convertFromBigDecimalToDouble(f.getBalance()));
+           AccountDTO tempDTOAccount = new AccountDTO(f.getAccountDetailPK().getAccountId(),f.getAccountType().getAccountType(),converters.BigsToPrimatives.fromBigDecimalToDouble(f.getBalance()));
            tempDTOAccount.setTransactions(getTransactions(f.getAccountDetailPK().getAccountId()));
         
            for (CustomerDetail cd :tempCustomer){
@@ -166,6 +166,7 @@ SessionContext ctx;
     }
 
     @Override
+    @RolesAllowed({"BankTeller","BankTellers"})
     public Collection<CustomerDTO> getCustomers() {
     Query query = em.createNamedQuery("CustomerDetail.findAll");
     Collection<CustomerDetail> tempDetail = query.getResultList();
@@ -179,6 +180,7 @@ SessionContext ctx;
     }
 
     @Override
+    @RolesAllowed({"BankTeller","BankTellers"})
     public void addAccount(Long custID, AccountDTO account) {
         AccountType tempType = new AccountType();
         AccountDetail tempDetail = new AccountDetail();
@@ -192,6 +194,7 @@ SessionContext ctx;
     }
 
     @Override
+       @RolesAllowed({"Customers","Customer"})
     public void newTransfer(long custID, long fromID, long toID, double amount, String message) {
 
        AccountTransaction from = new AccountTransaction(); 
@@ -217,6 +220,7 @@ SessionContext ctx;
     }
 
     @Override
+    @RolesAllowed({"Customers","BankTellers","Customer","BankTeller"})
     public void saveEditedCustomer(CustomerDTO cust, CustomerDTO temp) {
     CustomerDetail tempDetail = em.find(CustomerDetail.class, cust.getCustomerId());
     tempDetail.setFname(temp.getFirstName());
@@ -227,6 +231,7 @@ SessionContext ctx;
     }
 
     @Override
+    @RolesAllowed({"Customers","BankTellers","Customer","BankTeller"})
     public UserDTO getUser(String email) {
         Query query = em.createNamedQuery("Users.findByUserEmail");
         query.setParameter("userEmail", email);
@@ -261,6 +266,7 @@ SessionContext ctx;
     }
 
     @Override
+    @RolesAllowed({"BankTellers","BankTeller"})
     public void addUser(String pw, String Email){
         Users user = new Users();
         try {
@@ -277,6 +283,7 @@ SessionContext ctx;
     }
 
     @Override
+    @RolesAllowed({"Customers","Customer"})
     public CustomerDTO getCustomer() {
     CustomerDTO temp = null;
         Principal callerPrincipal1 = ctx.getCallerPrincipal();
@@ -285,10 +292,7 @@ SessionContext ctx;
     }
 
    
-    private double convertFromBigDecimalToDouble(BigDecimal bd){
-        String temp = ""+bd;
-        return Double.parseDouble(temp);
-    }
+    
 
   
 
